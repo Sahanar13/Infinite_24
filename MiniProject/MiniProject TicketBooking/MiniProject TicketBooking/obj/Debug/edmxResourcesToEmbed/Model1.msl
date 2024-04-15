@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MiniProjectTicketBookingModelStoreContainer" CdmEntityContainer="MiniProjectTicketBookingEntities">
+    <EntitySetMapping Name="Bookings">
+      <EntityTypeMapping TypeName="MiniProjectTicketBookingModel.Booking">
+        <MappingFragment StoreEntitySet="Booking">
+          <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+          <ScalarProperty Name="TrainId" ColumnName="TrainId" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+          <ScalarProperty Name="PassengerName" ColumnName="PassengerName" />
+          <ScalarProperty Name="SeatsBooked" ColumnName="SeatsBooked" />
+          <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+          <ScalarProperty Name="DateOfTravel" ColumnName="DateOfTravel" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cancellations">
+      <EntityTypeMapping TypeName="MiniProjectTicketBookingModel.Cancellation">
+        <MappingFragment StoreEntitySet="Cancellation">
+          <ScalarProperty Name="CancellationId" ColumnName="CancellationId" />
+          <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+          <ScalarProperty Name="SeatsCancelled" ColumnName="SeatsCancelled" />
+          <ScalarProperty Name="CancellationDate" ColumnName="CancellationDate" />
+          <ScalarProperty Name="CancellationReason" ColumnName="CancellationReason" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trains">
+      <EntityTypeMapping TypeName="MiniProjectTicketBookingModel.Train">
+        <MappingFragment StoreEntitySet="Trains">
+          <ScalarProperty Name="TrainId" ColumnName="TrainId" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+          <ScalarProperty Name="TrainName" ColumnName="TrainName" />
+          <ScalarProperty Name="From" ColumnName="From" />
+          <ScalarProperty Name="To" ColumnName="To" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="TotalBerths" ColumnName="TotalBerths" />
+          <ScalarProperty Name="AvailableBerths" ColumnName="AvailableBerths" />
+          <ScalarProperty Name="Fare" ColumnName="Fare" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="MiniProjectTicketBookingModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ActivateTrain" FunctionName="MiniProjectTicketBookingModel.Store.ActivateTrain" />
+    <FunctionImportMapping FunctionImportName="AddTrain" FunctionName="MiniProjectTicketBookingModel.Store.AddTrain" />
+    <FunctionImportMapping FunctionImportName="BookTicket" FunctionName="MiniProjectTicketBookingModel.Store.BookTicket" />
+    <FunctionImportMapping FunctionImportName="CancelTicket" FunctionName="MiniProjectTicketBookingModel.Store.CancelTicket" />
+    <FunctionImportMapping FunctionImportName="ChangePassword" FunctionName="MiniProjectTicketBookingModel.Store.ChangePassword" />
+    <FunctionImportMapping FunctionImportName="DeactivateTrain" FunctionName="MiniProjectTicketBookingModel.Store.DeactivateTrain" />
+    <FunctionImportMapping FunctionImportName="DeleteTrain" FunctionName="MiniProjectTicketBookingModel.Store.DeleteTrain" />
+    <FunctionImportMapping FunctionImportName="DeleteUser" FunctionName="MiniProjectTicketBookingModel.Store.DeleteUser" />
+    <FunctionImportMapping FunctionImportName="GenerateTotalRevenue" FunctionName="MiniProjectTicketBookingModel.Store.GenerateTotalRevenue" />
+    <FunctionImportMapping FunctionImportName="GetBookedTickets" FunctionName="MiniProjectTicketBookingModel.Store.GetBookedTickets">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MiniProjectTicketBookingModel.GetBookedTickets_Result">
+          <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+          <ScalarProperty Name="TrainId" ColumnName="TrainId" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+          <ScalarProperty Name="PassengerName" ColumnName="PassengerName" />
+          <ScalarProperty Name="SeatsBooked" ColumnName="SeatsBooked" />
+          <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+          <ScalarProperty Name="DateOfTravel" ColumnName="DateOfTravel" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetCancelledTickets" FunctionName="MiniProjectTicketBookingModel.Store.GetCancelledTickets" />
+    <FunctionImportMapping FunctionImportName="SearchTrains" FunctionName="MiniProjectTicketBookingModel.Store.SearchTrains">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MiniProjectTicketBookingModel.SearchTrains_Result">
+          <ScalarProperty Name="TrainId" ColumnName="TrainId" />
+          <ScalarProperty Name="TrainName" ColumnName="TrainName" />
+          <ScalarProperty Name="DepartureStation" ColumnName="DepartureStation" />
+          <ScalarProperty Name="ArrivalStation" ColumnName="ArrivalStation" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+          <ScalarProperty Name="AvailableSeats" ColumnName="AvailableSeats" />
+          <ScalarProperty Name="Fare" ColumnName="Fare" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SoftDeleteTrain" FunctionName="MiniProjectTicketBookingModel.Store.SoftDeleteTrain" />
+    <FunctionImportMapping FunctionImportName="UpdateTrainDetails" FunctionName="MiniProjectTicketBookingModel.Store.UpdateTrainDetails" />
+    <FunctionImportMapping FunctionImportName="UserLoginAndSignup" FunctionName="MiniProjectTicketBookingModel.Store.UserLoginAndSignup" />
+    <FunctionImportMapping FunctionImportName="ViewAdminDashboard" FunctionName="MiniProjectTicketBookingModel.Store.ViewAdminDashboard" />
+    <FunctionImportMapping FunctionImportName="ViewBookedTicket" FunctionName="MiniProjectTicketBookingModel.Store.ViewBookedTicket" />
+    <FunctionImportMapping FunctionImportName="ViewBookingHistory" FunctionName="MiniProjectTicketBookingModel.Store.ViewBookingHistory">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MiniProjectTicketBookingModel.ViewBookingHistory_Result">
+          <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+          <ScalarProperty Name="TrainId" ColumnName="TrainId" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+          <ScalarProperty Name="PassengerName" ColumnName="PassengerName" />
+          <ScalarProperty Name="SeatsBooked" ColumnName="SeatsBooked" />
+          <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+          <ScalarProperty Name="DateOfTravel" ColumnName="DateOfTravel" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

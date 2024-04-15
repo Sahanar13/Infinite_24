@@ -1,0 +1,12 @@
+D:\Sahana13\SahanaRWebApplication\MiniProject\MiniProject TicketBooking\MiniProject TicketBooking\bin\Debug\MiniProject TicketBooking.exe.config
+D:\Sahana13\SahanaRWebApplication\MiniProject\MiniProject TicketBooking\MiniProject TicketBooking\bin\Debug\MiniProject TicketBooking.exe
+D:\Sahana13\SahanaRWebApplication\MiniProject\MiniProject TicketBooking\MiniProject TicketBooking\bin\Debug\MiniProject TicketBooking.pdb
+D:\Sahana13\SahanaRWebApplication\MiniProject\MiniProject TicketBooking\MiniProject TicketBooking\bin\Debug\EntityFramework.dll
+D:\Sahana13\SahanaRWebApplication\MiniProject\MiniProject TicketBooking\MiniProject TicketBooking\bin\Debug\EntityFramework.SqlServer.dll
+D:\Sahana13\SahanaRWebApplication\MiniProject\MiniProject TicketBooking\MiniProject TicketBooking\bin\Debug\EntityFramework.xml
+D:\Sahana13\SahanaRWebApplication\MiniProject\MiniProject TicketBooking\MiniProject TicketBooking\bin\Debug\EntityFramework.SqlServer.xml
+D:\Sahana13\SahanaRWebApplication\MiniProject\MiniProject TicketBooking\MiniProject TicketBooking\obj\Debug\MiniProject TicketBooking.csproj.AssemblyReference.cache
+D:\Sahana13\SahanaRWebApplication\MiniProject\MiniProject TicketBooking\MiniProject TicketBooking\obj\Debug\MiniProject TicketBooking.csproj.CoreCompileInputs.cache
+D:\Sahana13\SahanaRWebApplication\MiniProject\MiniProject TicketBooking\MiniProject TicketBooking\obj\Debug\MiniProject TicketBooking.csproj.CopyComplete
+D:\Sahana13\SahanaRWebApplication\MiniProject\MiniProject TicketBooking\MiniProject TicketBooking\obj\Debug\MiniProject TicketBooking.exe
+D:\Sahana13\SahanaRWebApplication\MiniProject\MiniProject TicketBooking\MiniProject TicketBooking\obj\Debug\MiniProject TicketBooking.pdb

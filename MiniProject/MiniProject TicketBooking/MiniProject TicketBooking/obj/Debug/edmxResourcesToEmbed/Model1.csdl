@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MiniProjectTicketBookingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="BookingId" />
+    </Key>
+    <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TrainId" Type="Int32" />
+    <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PassengerName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SeatsBooked" Type="Int32" />
+    <Property Name="BookingDate" Type="DateTime" Precision="3" />
+    <Property Name="DateOfTravel" Type="DateTime" Precision="0" />
+    <Property Name="TotalAmount" Type="Decimal" Precision="10" Scale="2" />
+    <NavigationProperty Name="Train" Relationship="Self.FK__Booking__4BAC3F29" FromRole="Booking" ToRole="Trains" />
+    <NavigationProperty Name="Cancellations" Relationship="Self.FK__Cancellat__Booki__5165187F" FromRole="Booking" ToRole="Cancellation" />
+  </EntityType>
+  <EntityType Name="Cancellation">
+    <Key>
+      <PropertyRef Name="CancellationId" />
+    </Key>
+    <Property Name="CancellationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BookingId" Type="Int32" />
+    <Property Name="SeatsCancelled" Type="Int32" />
+    <Property Name="CancellationDate" Type="DateTime" Precision="3" />
+    <Property Name="CancellationReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Booking" Relationship="Self.FK__Cancellat__Booki__5165187F" FromRole="Cancellation" ToRole="Booking" />
+  </EntityType>
+  <EntityType Name="Train">
+    <Key>
+      <PropertyRef Name="TrainId" />
+      <PropertyRef Name="Class" />
+    </Key>
+    <Property Name="TrainId" Type="Int32" Nullable="false" />
+    <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TrainName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="From" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="To" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="TotalBerths" Type="Int32" />
+    <Property Name="AvailableBerths" Type="Int32" />
+    <Property Name="Fare" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Bookings" Relationship="Self.FK__Booking__4BAC3F29" FromRole="Trains" ToRole="Booking" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LoginId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Booking__4BAC3F29">
+    <End Role="Trains" Type="Self.Train" Multiplicity="0..1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trains">
+        <PropertyRef Name="TrainId" />
+        <PropertyRef Name="Class" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="TrainId" />
+        <PropertyRef Name="Class" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cancellat__Booki__5165187F">
+    <End Role="Booking" Type="Self.Booking" Multiplicity="0..1" />
+    <End Role="Cancellation" Type="Self.Cancellation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="BookingId" />
+      </Principal>
+      <Dependent Role="Cancellation">
+        <PropertyRef Name="BookingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MiniProjectTicketBookingEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Bookings" EntityType="Self.Booking" />
+    <EntitySet Name="Cancellations" EntityType="Self.Cancellation" />
+    <EntitySet Name="Trains" EntityType="Self.Train" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK__Booking__4BAC3F29" Association="Self.FK__Booking__4BAC3F29">
+      <End Role="Trains" EntitySet="Trains" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cancellat__Booki__5165187F" Association="Self.FK__Cancellat__Booki__5165187F">
+      <End Role="Booking" EntitySet="Bookings" />
+      <End Role="Cancellation" EntitySet="Cancellations" />
+    </AssociationSet>
+    <FunctionImport Name="ActivateTrain">
+      <Parameter Name="TrainId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="AddTrain">
+      <Parameter Name="TrainId" Mode="In" Type="Int32" />
+      <Parameter Name="Class" Mode="In" Type="String" />
+      <Parameter Name="TrainName" Mode="In" Type="String" />
+      <Parameter Name="FromStation" Mode="In" Type="String" />
+      <Parameter Name="ToStation" Mode="In" Type="String" />
+      <Parameter Name="TrainManagerName" Mode="In" Type="String" />
+      <Parameter Name="TotalBerths" Mode="In" Type="Int32" />
+      <Parameter Name="AvailableBerths" Mode="In" Type="Int32" />
+      <Parameter Name="Fare" Mode="In" Type="Decimal" />
+      <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="BookTicket">
+      <Parameter Name="LoginId" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+      <Parameter Name="TrainId" Mode="In" Type="Int32" />
+      <Parameter Name="Class" Mode="In" Type="String" />
+      <Parameter Name="PassengerName" Mode="In" Type="String" />
+      <Parameter Name="SeatsBooked" Mode="In" Type="Int32" />
+      <Parameter Name="BookingDate" Mode="In" Type="DateTime" />
+      <Parameter Name="DateOfTravel" Mode="In" Type="DateTime" />
+      <Parameter Name="Amount" Mode="InOut" Type="Decimal" />
+      <Parameter Name="BookingId" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="CancelTicket" ReturnType="Collection(Decimal)">
+      <Parameter Name="BookingId" Mode="In" Type="Int32" />
+      <Parameter Name="SeatsToCancel" Mode="In" Type="Int32" />
+      <Parameter Name="CancellationReason" Mode="In" Type="String" />
+      <Parameter Name="RefundAmount" Mode="InOut" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="ChangePassword">
+      <Parameter Name="LoginId" Mode="In" Type="String" />
+      <Parameter Name="OldPassword" Mode="In" Type="String" />
+      <Parameter Name="NewPassword" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DeactivateTrain">
+      <Parameter Name="TrainId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteTrain">
+      <Parameter Name="TrainId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteUser">
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GenerateTotalRevenue" />
+    <FunctionImport Name="GetBookedTickets" ReturnType="Collection(MiniProjectTicketBookingModel.GetBookedTickets_Result)" />
+    <FunctionImport Name="GetCancelledTickets" />
+    <FunctionImport Name="SearchTrains" ReturnType="Collection(MiniProjectTicketBookingModel.SearchTrains_Result)">
+      <Parameter Name="FromStation" Mode="In" Type="String" />
+      <Parameter Name="ToStation" Mode="In" Type="String" />
+      <Parameter Name="DateOfTravel" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="SoftDeleteTrain">
+      <Parameter Name="TrainId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateTrainDetails">
+      <Parameter Name="TrainId" Mode="In" Type="Int32" />
+      <Parameter Name="Class" Mode="In" Type="String" />
+      <Parameter Name="TrainName" Mode="In" Type="String" />
+      <Parameter Name="FromStation" Mode="In" Type="String" />
+      <Parameter Name="ToStation" Mode="In" Type="String" />
+      <Parameter Name="TrainManagerName" Mode="In" Type="String" />
+      <Parameter Name="TotalBerths" Mode="In" Type="Int32" />
+      <Parameter Name="AvailableBerths" Mode="In" Type="Int32" />
+      <Parameter Name="Fare" Mode="In" Type="Decimal" />
+      <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="UserLoginAndSignup">
+      <Parameter Name="LoginId" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+      <Parameter Name="IsExistingUser" Mode="InOut" Type="Boolean" />
+      <Parameter Name="IsValid" Mode="InOut" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="ViewAdminDashboard" />
+    <FunctionImport Name="ViewBookedTicket">
+      <Parameter Name="BookingId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="ViewBookingHistory" ReturnType="Collection(MiniProjectTicketBookingModel.ViewBookingHistory_Result)">
+      <Parameter Name="LoginId" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="GetBookedTickets_Result">
+    <Property Type="Int32" Name="BookingId" Nullable="false" />
+    <Property Type="Int32" Name="TrainId" Nullable="true" />
+    <Property Type="String" Name="Class" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="PassengerName" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="SeatsBooked" Nullable="true" />
+    <Property Type="DateTime" Name="BookingDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DateOfTravel" Nullable="true" />
+    <Property Type="Decimal" Name="TotalAmount" Nullable="true" Precision="10" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="SearchTrains_Result">
+    <Property Type="Int32" Name="TrainId" Nullable="false" />
+    <Property Type="String" Name="TrainName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="DepartureStation" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="ArrivalStation" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Class" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="AvailableSeats" Nullable="true" />
+    <Property Type="Decimal" Name="Fare" Nullable="true" Precision="10" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="ViewBookingHistory_Result">
+    <Property Type="Int32" Name="BookingId" Nullable="false" />
+    <Property Type="Int32" Name="TrainId" Nullable="true" />
+    <Property Type="String" Name="Class" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="PassengerName" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="SeatsBooked" Nullable="true" />
+    <Property Type="DateTime" Name="BookingDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DateOfTravel" Nullable="true" />
+    <Property Type="Decimal" Name="TotalAmount" Nullable="true" Precision="10" Scale="2" />
+  </ComplexType>
+</Schema>
