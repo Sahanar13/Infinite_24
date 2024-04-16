@@ -9,7 +9,7 @@ CREATE TABLE Trains (
     Name VARCHAR(100),
     TotalBerths INT,
     AvailableBerths INT,
-    Fare DECIMAL(10, 2), -- Added Fare column
+    Fare DECIMAL(10, 2),
     IsActive BIT,
     PRIMARY KEY (TrainId, Class) 
 );
@@ -19,13 +19,13 @@ CREATE TABLE Trains (
 CREATE TABLE Booking (
     BookingId INT PRIMARY KEY IDENTITY,
     TrainId INT,
-    Class VARCHAR(50), -- Added Class column
+    Class VARCHAR(50), 
     PassengerName VARCHAR(100),
     SeatsBooked INT,
     BookingDate DATETIME,
-    DateOfTravel DATE, -- Added DateOfTravel column
-    TotalAmount DECIMAL(10, 2), -- Added TotalAmount column
-    FOREIGN KEY (TrainId, Class) REFERENCES Trains(TrainId, Class) -- Modified foreign key constraint to reference composite primary key
+    DateOfTravel DATE,
+    TotalAmount DECIMAL(10, 2),
+    FOREIGN KEY (TrainId, Class) REFERENCES Trains(TrainId, Class) 
 );
 
 
@@ -53,27 +53,27 @@ CREATE OR ALTER PROCEDURE UserLoginAndSignup
     @IsValid BIT OUTPUT
 AS
 BEGIN
-    SET @IsExistingUser = 0; -- Default to new user
+    SET @IsExistingUser = 0; 
 
-    -- Check if the user already exists
+   
     IF EXISTS (SELECT 1 FROM Users WHERE LoginId = @LoginId)
     BEGIN
-        SET @IsExistingUser = 1; -- Existing user
+        SET @IsExistingUser = 1; 
     END
     ELSE
     BEGIN
-        -- Add new user if not already existing
+        
         INSERT INTO Users (LoginId, Password) VALUES (@LoginId, @Password);
     END
 
-    -- Validate user credentials
+    
     IF EXISTS (SELECT 1 FROM Users WHERE LoginId = @LoginId AND Password = @Password)
     BEGIN
-        SET @IsValid = 1; -- Valid login
+        SET @IsValid = 1; 
     END
     ELSE
     BEGIN
-        SET @IsValid = 0; -- Invalid login
+        SET @IsValid = 0; 
     END
 END;
 
@@ -102,15 +102,15 @@ CREATE OR ALTER PROCEDURE AddTrain
     @IsActive BIT
 AS
 BEGIN
-    IF @IsActive = 1 -- If IsActive is set to 1 (true)
+    IF @IsActive = 1 
     BEGIN
         INSERT INTO Trains (TrainId, Class, TrainName, [From], [To], Name, TotalBerths, AvailableBerths, Fare, IsActive)
-        VALUES (@TrainId, @Class, @TrainName, @FromStation, @ToStation, @TrainManagerName, @TotalBerths, @AvailableBerths, @Fare, 1); -- Set IsActive as 1 (true)
+        VALUES (@TrainId, @Class, @TrainName, @FromStation, @ToStation, @TrainManagerName, @TotalBerths, @AvailableBerths, @Fare, 1); 
     END
     ELSE
     BEGIN
         INSERT INTO Trains (TrainId, Class, TrainName, [From], [To], Name, TotalBerths, AvailableBerths, Fare, IsActive)
-        VALUES (@TrainId, @Class, @TrainName, @FromStation, @ToStation, @TrainManagerName, @TotalBerths, @AvailableBerths, @Fare, 0); -- Set IsActive as 0 (false)
+        VALUES (@TrainId, @Class, @TrainName, @FromStation, @ToStation, @TrainManagerName, @TotalBerths, @AvailableBerths, @Fare, 0); 
     END
 
     PRINT 'Train added successfully.'
@@ -137,7 +137,7 @@ AS
 BEGIN
     DECLARE @UserId INT
     
-    -- Check if the user credentials are valid
+   
     SELECT @UserId = UserId
     FROM Users
     WHERE LoginId = @LoginId AND Password = @Password
@@ -148,7 +148,7 @@ BEGIN
         RETURN
     END
     
-    -- Check if the requested seats are available
+   
     DECLARE @AvailableSeats INT
     SELECT @AvailableSeats = AvailableBerths
     FROM Trains
@@ -160,7 +160,7 @@ BEGIN
         RETURN
     END
     
-    -- Check if the train is active
+    
     DECLARE @IsTrainActive BIT
     SELECT @IsTrainActive = IsActive
     FROM Trains
@@ -172,27 +172,27 @@ BEGIN
         RETURN
     END
     
-    -- Calculate total amount
+   
     SET @Amount = @SeatsBooked * (SELECT Fare FROM Trains WHERE TrainId = @TrainId AND Class = @Class)
     
-    -- Update available seats in the Trains table
+    
     UPDATE Trains
     SET AvailableBerths = AvailableBerths - @SeatsBooked
     WHERE TrainId = @TrainId AND Class = @Class
     
-    -- Insert booking details into the Booking table
+   
     INSERT INTO Booking (TrainId, Class, PassengerName, SeatsBooked, BookingDate, DateOfTravel, TotalAmount)
     VALUES (@TrainId, @Class, @PassengerName, @SeatsBooked, @BookingDate, @DateOfTravel, @Amount)
     
-    -- Retrieve booking ID of the last inserted record
+    
     SET @BookingId = SCOPE_IDENTITY(); 
     
-    -- Set output parameters
+   
     SET @PassengerNameOutput = @PassengerName
     SET @SeatsBookedOutput = @SeatsBooked
     SET @DateOfTravelOutput = @DateOfTravel
     
-    -- Print booking details
+   
     PRINT 'Ticket(s) booked successfully.'
     PRINT 'Booking ID: ' + CAST(@BookingId AS NVARCHAR(20))
     PRINT 'Total Amount: ' + CAST(@Amount AS NVARCHAR(20))
@@ -216,33 +216,33 @@ AS
 BEGIN
     DECLARE @TrainId INT, @Class VARCHAR(50), @Amount DECIMAL(10, 2)
     
-    -- Get the booking details
+    
     SELECT @TrainId = TrainId, @Class = Class, @Amount = TotalAmount
     FROM Booking
     WHERE BookingId = @BookingId
     
-    -- Check if the booking exists
+   
     IF @TrainId IS NULL
     BEGIN
         PRINT 'Booking not found. Cancellation failed.'
         RETURN
     END
     
-    -- Calculate the refund amount for cancelled seats
+   
     SET @RefundAmount = @SeatsToCancel * (@Amount / (SELECT SeatsBooked FROM Booking WHERE BookingId = @BookingId))
     
-    -- Update available seats in the Trains table
+   
     UPDATE Trains
     SET AvailableBerths = AvailableBerths + @SeatsToCancel
     WHERE TrainId = @TrainId AND Class = @Class
     
-    -- Update the booking details
+   
     UPDATE Booking
     SET SeatsBooked = SeatsBooked - @SeatsToCancel,
         TotalAmount = TotalAmount - @RefundAmount
     WHERE BookingId = @BookingId
     
-    -- Record the cancellation with reason (handle null or empty reason)
+   
     IF @CancellationReason IS NOT NULL AND @CancellationReason <> ''
     BEGIN
         INSERT INTO Cancellation (BookingId, SeatsCancelled, CancellationDate, CancellationReason)
@@ -257,7 +257,7 @@ BEGIN
     PRINT 'Ticket(s) cancelled successfully.'
     PRINT 'Refund Amount: ' + CAST(@RefundAmount AS NVARCHAR(20))
     
-    -- Return refund amount
+    
     SELECT @RefundAmount AS RefundAmount
 END
 
@@ -270,7 +270,7 @@ BEGIN
 
     PRINT 'Viewing admin dashboard...';
 
-    -- Retrieve booked tickets
+    
     PRINT 'Booked Tickets:';
     SELECT 
         b.BookingId,
@@ -284,7 +284,7 @@ BEGIN
     FROM 
         Bookings b;
 
-    -- Retrieve cancelled tickets with cancellation reason
+   
     PRINT 'Cancelled Tickets:';
     SELECT 
         c.CancellationId,
@@ -329,10 +329,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Check if the train exists
+    
     IF EXISTS (SELECT 1 FROM Trains WHERE TrainId = @TrainId)
     BEGIN
-        -- Delete the train
+       
         DELETE FROM Trains WHERE TrainId = @TrainId;
         PRINT 'Train deleted successfully.';
     END
@@ -383,7 +383,7 @@ CREATE OR ALTER PROCEDURE GetCancelledTickets
 AS
 BEGIN
     SELECT c.CancellationId, c.BookingId, c.SeatsCancelled, c.CancellationDate, c.CancellationReason,
-           b.PassengerName  -- Include passenger name for reference if needed
+           b.PassengerName  
     FROM Cancellations c
     INNER JOIN Bookings b ON c.BookingId = b.BookingId;
 END
@@ -427,10 +427,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Check if the user exists
+   
     IF EXISTS (SELECT 1 FROM Users WHERE LoginId = @UserId)
     BEGIN
-        -- Delete the user
+        
         DELETE FROM Users WHERE LoginId = @UserId;
         PRINT 'User deleted successfully.';
     END
@@ -467,7 +467,7 @@ BEGIN
             @DateOfTravel DATE,
             @TotalAmount DECIMAL(10, 2);
 
-    -- Retrieve ticket details based on the booking ID
+   
     SELECT  @TrainName = t.TrainName,
             @FromStation = t.[From],
             @ToStation = t.[To],
@@ -481,10 +481,10 @@ BEGIN
     INNER JOIN Trains t ON b.TrainId = t.TrainId
     WHERE   b.BookingId = @BookingId;
 
-    -- Check if the booking ID exists
+   
     IF @@ROWCOUNT > 0
     BEGIN
-        -- Print ticket details
+        
         PRINT '----------------------------------------------';
         PRINT '              BOOKED TICKET                   ';
         PRINT '----------------------------------------------';
@@ -501,7 +501,7 @@ BEGIN
     END
     ELSE
     BEGIN
-        -- Print message if booking ID does not exist
+        
         PRINT 'Ticket not found for Booking ID: ' + CAST(@BookingId AS VARCHAR(10));
     END
 END;
@@ -522,14 +522,14 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Check if the train exists
+    
     IF NOT EXISTS (SELECT 1 FROM Trains WHERE TrainId = @TrainId AND Class = @Class)
     BEGIN
         PRINT 'Train not found.';
         RETURN;
     END
 
-    -- Update train details
+   
     UPDATE Trains
     SET TrainName = @TrainName,
         [From] = @FromStation,
@@ -569,14 +569,14 @@ BEGIN
         AND TrainId NOT IN (SELECT TrainId FROM Booking WHERE DateOfTravel = @DateOfTravel)
 END;
 
--- View Booking History
+
 CREATE OR ALTER PROCEDURE ViewBookingHistory
     @LoginId NVARCHAR(50)
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Retrieve booking history of the user
+    
     SELECT 
         BookingId, 
         TrainId, 
@@ -601,10 +601,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Check if old password matches
+    
     IF EXISTS (SELECT 1 FROM Users WHERE LoginId = @LoginId AND Password = @OldPassword)
     BEGIN
-        -- Change password
+       
         UPDATE Users SET Password = @NewPassword WHERE LoginId = @LoginId;
         PRINT 'Password changed successfully.';
     END

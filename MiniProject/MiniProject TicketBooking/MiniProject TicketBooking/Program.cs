@@ -50,7 +50,7 @@ namespace MiniProject_TicketBooking
             Console.Write("Password: ");
             string passwordInput = Console.ReadLine();
 
-            // Assume admin login details
+            
             string adminUsername = "admin";
             string adminPassword = "admin123";
 
@@ -154,7 +154,7 @@ namespace MiniProject_TicketBooking
                     break;
                 case "no":
                     UserSignUp();
-                    UserExistingLogin(); // After signup, login directly
+                    UserExistingLogin(); 
                     break;
                 default:
                     Console.WriteLine("Invalid choice.");
@@ -198,7 +198,7 @@ namespace MiniProject_TicketBooking
 
                 while (true)
                 {
-                    // Prompt the user to choose between booking a ticket or canceling a ticket
+                   
                     Console.WriteLine("Select Option:");
                     Console.WriteLine("1. Book Ticket");
                     Console.WriteLine("2. Cancel Ticket");
@@ -243,17 +243,17 @@ namespace MiniProject_TicketBooking
             Console.Write("Enter new Password: ");
             string newPassword = Console.ReadLine();
 
-            // Code for signing up the user
+           
 
             Console.WriteLine("User signed up successfully.");
-            // Proceed with whatever action you want for new users
+           
         }
 
         static void AddTrain()
         {
             using (var context = new MiniProjectTicketBookingEntities())
             {
-                // Input train details
+                
                 Console.Write("Enter Train ID: ");
                 int trainId = Convert.ToInt32(Console.ReadLine());
                 Console.Write("Enter Class: ");
@@ -275,7 +275,7 @@ namespace MiniProject_TicketBooking
                 Console.Write("Enter IsActive (true/false): ");
                 bool isActive = Convert.ToBoolean(Console.ReadLine());
 
-                // Add train to database
+               
                 context.Database.ExecuteSqlCommand("EXEC AddTrain @TrainId, @Class, @TrainName, @FromStation, @ToStation, @TrainManagerName, @TotalBerths, @AvailableBerths, @Fare, @IsActive",
                     new SqlParameter("@TrainId", trainId),
                     new SqlParameter("@Class", trainClass),
@@ -296,11 +296,11 @@ namespace MiniProject_TicketBooking
         {
             using (var context = new MiniProjectTicketBookingEntities())
             {
-                // Input train ID to delete
+                
                 Console.Write("Enter Train ID to delete: ");
                 int trainIdToDelete = Convert.ToInt32(Console.ReadLine());
 
-                // Execute the stored procedure to soft delete the train
+                
                 context.Database.ExecuteSqlCommand("EXEC SoftDeleteTrain @TrainId",
                     new SqlParameter("@TrainId", trainIdToDelete));
 
@@ -344,13 +344,13 @@ namespace MiniProject_TicketBooking
                     Console.WriteLine($"Booking ID: {booking.BookingId}, Train ID: {booking.TrainId}, Class: {booking.Class}, Passenger Name: {booking.PassengerName}, Seats Booked: {booking.SeatsBooked}, Booking Date: {booking.BookingDate}, Date of Travel: {booking.DateOfTravel}, Total Amount: {booking.TotalAmount}");
                 }
 
-                var cancellations = context.Cancellations.Include("Booking").ToList(); // Include Booking navigation property to access booking details
+                var cancellations = context.Cancellations.Include("Booking").ToList(); 
                 Console.WriteLine("\nCancelled Tickets:");
                 foreach (var cancellation in cancellations)
                 {
                     Console.WriteLine($"Cancellation ID: {cancellation.CancellationId}, Booking ID: {cancellation.BookingId}, Seats Cancelled: {cancellation.SeatsCancelled}, Cancellation Date: {cancellation.CancellationDate}, Cancellation Reason: {cancellation.CancellationReason}");
 
-                    // No need to access cancellation reason from associated booking, use the cancellation reason directly
+                    
                 }
             }
         }
@@ -359,10 +359,9 @@ namespace MiniProject_TicketBooking
         {
             Console.WriteLine("Booking a ticket...");
 
-            // Display all trains
+          
             DisplayAllTrains();
 
-            // Prompt the user for necessary details
             Console.Write("Enter Train ID: ");
             int trainId = Convert.ToInt32(Console.ReadLine());
             Console.Write("Enter Class: ");
@@ -371,13 +370,13 @@ namespace MiniProject_TicketBooking
             string passengerName = Console.ReadLine();
             Console.Write("Enter Seats to Book: ");
             int seatsBooked = Convert.ToInt32(Console.ReadLine());
-            // Automatically generate booking date
+          
             DateTime bookingDate = DateTime.Now;
             Console.Write("Enter Date of Travel (YYYY-MM-DD): ");
             DateTime dateOfTravel = Convert.ToDateTime(Console.ReadLine());
 
-            decimal totalAmount = 0; // Variable to store the total amount
-            int bookingId = 0; // Variable to store the booking ID
+            decimal totalAmount = 0; 
+            int bookingId = 0; 
 
             try
             {
@@ -385,7 +384,7 @@ namespace MiniProject_TicketBooking
                 {
                     connection.Open();
 
-                    // Check if the train is active before booking
+                   
                     SqlCommand checkTrainCommand = new SqlCommand("SELECT IsActive FROM Trains WHERE TrainId = @TrainId", connection);
                     checkTrainCommand.Parameters.AddWithValue("@TrainId", trainId);
                     bool isTrainActive = (bool)checkTrainCommand.ExecuteScalar();
@@ -400,7 +399,7 @@ namespace MiniProject_TicketBooking
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        // Add parameters
+                      
                         command.Parameters.AddWithValue("@LoginId", loginId);
                         command.Parameters.AddWithValue("@Password", password);
                         command.Parameters.AddWithValue("@TrainId", trainId);
@@ -410,7 +409,7 @@ namespace MiniProject_TicketBooking
                         command.Parameters.AddWithValue("@BookingDate", bookingDate);
                         command.Parameters.AddWithValue("@DateOfTravel", dateOfTravel);
 
-                        // Adding output parameters for total amount, booking ID, passenger name, seats booked, and date of travel
+                       
                         SqlParameter totalAmountParam = new SqlParameter("@Amount", SqlDbType.Decimal);
                         totalAmountParam.Direction = ParameterDirection.Output;
                         command.Parameters.Add(totalAmountParam);
@@ -433,14 +432,14 @@ namespace MiniProject_TicketBooking
 
                         command.ExecuteNonQuery();
 
-                        // Retrieving output parameters
+                       
                         totalAmount = (decimal)totalAmountParam.Value;
                         bookingId = (int)bookingIdParam.Value;
                         string passengerNameOutput = passengerNameOutputParam.Value.ToString();
                         int seatsBookedOutput = (int)seatsBookedOutputParam.Value;
                         DateTime dateOfTravelOutput = (DateTime)dateOfTravelOutputParam.Value;
 
-                        // Display booked ticket details
+                        
                         Console.WriteLine("Your Ticket Booking Details:");
                         Console.WriteLine($"Booking ID: {bookingId}");
                         Console.WriteLine($"Train ID: {trainId}");
@@ -457,14 +456,14 @@ namespace MiniProject_TicketBooking
             }
             catch (SqlException ex)
             {
-                // Check if the error indicates that booking is not allowed due to train being inactive
-                if (ex.Number == 12345) // Replace 12345 with the actual error code for train inactive
+               
+                if (ex.Number == 12345) 
                 {
                     Console.WriteLine("Booking is not allowed for this train as it is inactive.");
                 }
                 else
                 {
-                    // Handle other SQL exceptions
+                 
                     Console.WriteLine("An error occurred while booking the ticket.");
                     Console.WriteLine(ex.Message);
                 }
@@ -477,7 +476,7 @@ namespace MiniProject_TicketBooking
         {
             Console.WriteLine("Canceling a ticket...");
 
-            // Prompt the user for the booking details
+            
             Console.Write("Enter Booking ID: ");
             int bookingId = Convert.ToInt32(Console.ReadLine());
             Console.Write("Enter Seats to Cancel: ");
@@ -485,7 +484,7 @@ namespace MiniProject_TicketBooking
             Console.Write("Enter Cancellation Reason: ");
             string cancellationReason = Console.ReadLine();
 
-            decimal refundAmount = 0; // Variable to store the refund amount
+            decimal refundAmount = 0; 
 
             try
             {
@@ -501,17 +500,17 @@ namespace MiniProject_TicketBooking
                         command.Parameters.AddWithValue("@SeatsToCancel", seatsToCancel);
                         command.Parameters.AddWithValue("@CancellationReason", !string.IsNullOrWhiteSpace(cancellationReason) ? cancellationReason : null);
 
-                        // Adding output parameter for refund amount
+                       
                         SqlParameter refundAmountParam = new SqlParameter("@RefundAmount", SqlDbType.Decimal);
                         refundAmountParam.Direction = ParameterDirection.Output;
                         command.Parameters.Add(refundAmountParam);
 
                         command.ExecuteNonQuery();
 
-                        // Retrieving refund amount from output parameter
+                       
                         refundAmount = (decimal)refundAmountParam.Value;
 
-                        // Display canceled ticket details
+                       
                         Console.WriteLine("Your Ticket Cancellation Details:");
                         Console.WriteLine($"Booking ID: {bookingId}");
                         Console.WriteLine($"Seats Cancelled: {seatsToCancel}");
@@ -523,7 +522,7 @@ namespace MiniProject_TicketBooking
             }
             catch (SqlException ex)
             {
-                // Handle SQL exceptions
+             
                 Console.WriteLine("An error occurred while canceling the ticket.");
                 Console.WriteLine(ex.Message);
             }
@@ -546,7 +545,7 @@ namespace MiniProject_TicketBooking
                     Console.WriteLine($"Available Berths: {train.AvailableBerths}");
                     Console.WriteLine($"Fare: {train.Fare}");
                     Console.WriteLine($"IsActive: {train.IsActive}");
-                    Console.WriteLine(); // Add an empty line for better separation
+                    Console.WriteLine(); 
                 }
             }
         }
@@ -584,14 +583,14 @@ namespace MiniProject_TicketBooking
 
         static void DeactivatedTrain()
         {
-            // Connection string to your database
+           
             const string ConnectionString = ("Server=ICS-LT-9R368G3\\SQLEXPRESS;Database=MiniProjectTicketBooking;Integrated Security=True;");
 
-            // Prompt user for TrainId input
+          
             Console.Write("Enter TrainId: ");
             int trainId = int.Parse(Console.ReadLine());
 
-            // Establish connection and execute stored procedure
+       
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand command = new SqlCommand("DeactivateTrain", connection))
@@ -607,7 +606,7 @@ namespace MiniProject_TicketBooking
                     }
                     catch (SqlException ex)
                     {
-                        // Handle exceptions
+                       
                         Console.WriteLine("Error: " + ex.Message);
                     }
                 }
@@ -616,7 +615,6 @@ namespace MiniProject_TicketBooking
 
         static void DeleteUser(int userId)
         {
-            // Connection string to your database
             const string ConnectionString = "YourConnectionString";
 
             try
@@ -644,7 +642,7 @@ namespace MiniProject_TicketBooking
 
         static void UpdateTrainDetails(int trainId, string trainClass, string trainName, string fromStation, string toStation, string trainManagerName, int totalBerths, int availableBerths, decimal fare, bool isActive)
         {
-            // Connection string to your database
+            
             const string ConnectionString = "Server = ICS - LT - 9R368G3\\SQLEXPRESS; Database = MiniProjectTicketBooking; Integrated Security = True; ";
 
             try
