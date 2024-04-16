@@ -67,9 +67,8 @@ namespace MiniProject_TicketBooking
                     Console.WriteLine("4. View Booked and Cancelled Tickets");
                     Console.WriteLine("5.DeactivatedTrain");
                     Console.WriteLine("6.GenerateTotalRevenue");
-                    Console.WriteLine("7.DeleteUser");
-                    Console.WriteLine("8.UpdateTrainDetails");
-                    Console.WriteLine("9. Logout");
+                    Console.WriteLine("7.UpdateTrainDetails");
+                    Console.WriteLine("8. Logout");
                     Console.Write("Enter your choice: ");
                     string adminChoice = Console.ReadLine();
 
@@ -93,13 +92,8 @@ namespace MiniProject_TicketBooking
                         case "6":
                             GenerateTotalRevenue();
                             break;
-                        case "7":
-                            Console.WriteLine("Enter the user ID you want to delete:");
-                            int userIdToDelete = Convert.ToInt32(Console.ReadLine());
-                            DeleteUser(userIdToDelete);
-                            break;
 
-                        case "8":
+                        case "7":
                             Console.WriteLine("Enter the train ID you want to update:");
                             int trainIdToUpdate = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("Enter the train class:");
@@ -125,7 +119,7 @@ namespace MiniProject_TicketBooking
                             break;
 
 
-                        case "9":
+                        case "8":
                             Console.WriteLine("Logging out...");
                             return;
                         default:
@@ -613,31 +607,7 @@ namespace MiniProject_TicketBooking
             }
         }
 
-        static void DeleteUser(int userId)
-        {
-            const string ConnectionString = "YourConnectionString";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
-                {
-                    using (SqlCommand command = new SqlCommand("DeleteUser", connection))
-                    {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@UserId", userId);
-
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        Console.WriteLine("User deleted successfully.");
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine("An error occurred: " + ex.Message);
-            }
-        }
-
+      
        
 
         static void UpdateTrainDetails(int trainId, string trainClass, string trainName, string fromStation, string toStation, string trainManagerName, int totalBerths, int availableBerths, decimal fare, bool isActive)
