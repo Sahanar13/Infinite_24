@@ -1,6 +1,6 @@
 Create database MiniProjectTicketBooking
 use MiniProjectTicketBooking
-CREATE TABLE Trains (
+Create TABLE Trains (
     TrainId INT,
     Class VARCHAR(50),
     TrainName VARCHAR(100),
@@ -16,7 +16,7 @@ CREATE TABLE Trains (
 
 
 
-CREATE TABLE Booking (
+Create TABLE Booking (
     BookingId INT PRIMARY KEY IDENTITY,
     TrainId INT,
     Class VARCHAR(50), 
@@ -117,8 +117,6 @@ BEGIN
 END
 
 
-
-
 CREATE OR ALTER PROCEDURE BookTicket
     @LoginId NVARCHAR(50),
     @Password NVARCHAR(50),
@@ -193,14 +191,28 @@ BEGIN
     SET @DateOfTravelOutput = @DateOfTravel
     
    
+   -- Print booking details
     PRINT 'Ticket(s) booked successfully.'
     PRINT 'Booking ID: ' + CAST(@BookingId AS NVARCHAR(20))
     PRINT 'Total Amount: ' + CAST(@Amount AS NVARCHAR(20))
     PRINT 'Passenger Name: ' + @PassengerName
     PRINT 'Seats Booked: ' + CAST(@SeatsBooked AS NVARCHAR(10))
     PRINT 'Date of Travel: ' + CONVERT(NVARCHAR(20), @DateOfTravel, 23)
+    PRINT 'Class: ' + @Class
+    PRINT 'Booking Date: ' + CONVERT(NVARCHAR(20), @BookingDate, 23)
     
-END 
+    -- Display additional ticket details such as from and to, if available
+    DECLARE @FromStation NVARCHAR(100), @ToStation NVARCHAR(100)
+    SELECT @FromStation = [From], @ToStation = [To]
+    FROM Trains
+    WHERE TrainId = @TrainId
+    
+    IF @FromStation IS NOT NULL AND @ToStation IS NOT NULL
+    BEGIN
+        PRINT 'From: ' + @FromStation
+        PRINT 'To: ' + @ToStation
+    END
+END
 
 
 
@@ -388,7 +400,7 @@ BEGIN
     INNER JOIN Bookings b ON c.BookingId = b.BookingId;
 END
 
-CREATE PROCEDURE SoftDeleteTrain
+CREATE OR ALTER PROCEDURE SoftDeleteTrain
     @TrainId INT
 AS
 BEGIN
@@ -397,14 +409,7 @@ BEGIN
     WHERE TrainId = @TrainId;
 END;
 
-CREATE PROCEDURE SoftDeleteTrain
-    @TrainId INT
-AS
-BEGIN
-    UPDATE Trains
-    SET IsActive = 0
-    WHERE TrainId = @TrainId;
-END;
+
 
 
 CREATE OR ALTER PROCEDURE GenerateTotalRevenue
@@ -613,3 +618,14 @@ BEGIN
         PRINT 'Old password does not match. Password change failed.';
     END
 END;
+
+
+CREATE OR ALTER PROCEDURE GetAllTrains
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT TrainId, Class, TrainName, [From], [To], Name, TotalBerths, AvailableBerths, Fare, IsActive
+    FROM Trains;
+END;
+

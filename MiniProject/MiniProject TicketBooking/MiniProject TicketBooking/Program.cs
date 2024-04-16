@@ -68,7 +68,8 @@ namespace MiniProject_TicketBooking
                     Console.WriteLine("5.DeactivatedTrain");
                     Console.WriteLine("6.GenerateTotalRevenue");
                     Console.WriteLine("7.UpdateTrainDetails");
-                    Console.WriteLine("8. Logout");
+                    Console.WriteLine("8.DisplayAllTrains");
+                    Console.WriteLine("9. Logout");
                     Console.Write("Enter your choice: ");
                     string adminChoice = Console.ReadLine();
 
@@ -117,9 +118,11 @@ namespace MiniProject_TicketBooking
 
                             UpdateTrainDetails(trainIdToUpdate, trainClass, trainName, fromStation, toStation, trainManagerName, totalBerths, availableBerths, fare, isActive);
                             break;
-
-
                         case "8":
+                            DisplayAllTrains();
+                            return;
+
+                        case "9":
                             Console.WriteLine("Logging out...");
                             return;
                         default:
@@ -160,8 +163,9 @@ namespace MiniProject_TicketBooking
         {
             Console.Write("Login ID: ");
             string loginId = Console.ReadLine();
+
             Console.Write("Password: ");
-            string password = Console.ReadLine();
+            string password = ReadPassword();
 
             bool isValidLogin = false;
             bool isExistingUser = false;
@@ -192,7 +196,6 @@ namespace MiniProject_TicketBooking
 
                 while (true)
                 {
-                   
                     Console.WriteLine("Select Option:");
                     Console.WriteLine("1. Book Ticket");
                     Console.WriteLine("2. Cancel Ticket");
@@ -208,7 +211,6 @@ namespace MiniProject_TicketBooking
                         case "2":
                             CancelTicket();
                             break;
-
                         case "3":
                             Console.WriteLine("Logging out...");
                             return;
@@ -228,6 +230,28 @@ namespace MiniProject_TicketBooking
                 Console.WriteLine("Invalid user login credentials.");
             }
         }
+
+        // Method to read password with masking
+        static string ReadPassword()
+        {
+            string password = "";
+            ConsoleKeyInfo key;
+
+            do
+            {
+                key = Console.ReadKey(true);
+
+                if (key.Key != ConsoleKey.Enter)
+                {
+                    password += key.KeyChar;
+                    Console.Write("*");
+                }
+            } while (key.Key != ConsoleKey.Enter);
+
+            Console.WriteLine();
+            return password;
+        }
+
 
         static void UserSignUp()
         {
@@ -348,12 +372,11 @@ namespace MiniProject_TicketBooking
                 }
             }
         }
-
         static void BookTicket(string loginId, string password)
         {
             Console.WriteLine("Booking a ticket...");
 
-          
+
             DisplayAllTrains();
 
             Console.Write("Enter Train ID: ");
@@ -364,13 +387,13 @@ namespace MiniProject_TicketBooking
             string passengerName = Console.ReadLine();
             Console.Write("Enter Seats to Book: ");
             int seatsBooked = Convert.ToInt32(Console.ReadLine());
-          
+
             DateTime bookingDate = DateTime.Now;
             Console.Write("Enter Date of Travel (YYYY-MM-DD): ");
             DateTime dateOfTravel = Convert.ToDateTime(Console.ReadLine());
 
-            decimal totalAmount = 0; 
-            int bookingId = 0; 
+            decimal totalAmount = 0;
+            int bookingId = 0;
 
             try
             {
@@ -378,7 +401,7 @@ namespace MiniProject_TicketBooking
                 {
                     connection.Open();
 
-                   
+
                     SqlCommand checkTrainCommand = new SqlCommand("SELECT IsActive FROM Trains WHERE TrainId = @TrainId", connection);
                     checkTrainCommand.Parameters.AddWithValue("@TrainId", trainId);
                     bool isTrainActive = (bool)checkTrainCommand.ExecuteScalar();
@@ -393,7 +416,7 @@ namespace MiniProject_TicketBooking
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                      
+
                         command.Parameters.AddWithValue("@LoginId", loginId);
                         command.Parameters.AddWithValue("@Password", password);
                         command.Parameters.AddWithValue("@TrainId", trainId);
@@ -403,7 +426,7 @@ namespace MiniProject_TicketBooking
                         command.Parameters.AddWithValue("@BookingDate", bookingDate);
                         command.Parameters.AddWithValue("@DateOfTravel", dateOfTravel);
 
-                       
+
                         SqlParameter totalAmountParam = new SqlParameter("@Amount", SqlDbType.Decimal);
                         totalAmountParam.Direction = ParameterDirection.Output;
                         command.Parameters.Add(totalAmountParam);
@@ -426,14 +449,14 @@ namespace MiniProject_TicketBooking
 
                         command.ExecuteNonQuery();
 
-                       
+
                         totalAmount = (decimal)totalAmountParam.Value;
                         bookingId = (int)bookingIdParam.Value;
                         string passengerNameOutput = passengerNameOutputParam.Value.ToString();
                         int seatsBookedOutput = (int)seatsBookedOutputParam.Value;
                         DateTime dateOfTravelOutput = (DateTime)dateOfTravelOutputParam.Value;
 
-                        
+
                         Console.WriteLine("Your Ticket Booking Details:");
                         Console.WriteLine($"Booking ID: {bookingId}");
                         Console.WriteLine($"Train ID: {trainId}");
@@ -450,19 +473,24 @@ namespace MiniProject_TicketBooking
             }
             catch (SqlException ex)
             {
-               
-                if (ex.Number == 12345) 
+
+                if (ex.Number == 12345)
                 {
                     Console.WriteLine("Booking is not allowed for this train as it is inactive.");
                 }
                 else
                 {
-                 
+
                     Console.WriteLine("An error occurred while booking the ticket.");
                     Console.WriteLine(ex.Message);
                 }
             }
         }
+
+
+
+
+
 
 
 
