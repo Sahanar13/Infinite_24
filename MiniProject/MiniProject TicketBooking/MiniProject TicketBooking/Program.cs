@@ -9,11 +9,19 @@ namespace MiniProject_TicketBooking
     class Program
     {
         private static string connectionString = "Server=ICS-LT-9R368G3\\SQLEXPRESS;Database=MiniProjectTicketBooking;Integrated Security=True;";
-        
+       
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Railway Booking!");
+           
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("╔══════════════════════════════╗");
+                Console.WriteLine("║    Welcome to Railway Booking!   ║");
+                Console.WriteLine("╚══════════════════════════════╝");
+                Console.ResetColor();
+                // Rest of your code follows...
+     
+
 
             while (true)
             {
@@ -44,13 +52,18 @@ namespace MiniProject_TicketBooking
 
         static void AdminLogin()
         {
-            Console.WriteLine("\nAdmin Login:");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("══════════════════════════════");
+            Console.WriteLine("          Admin Login:          ");
+            Console.WriteLine("══════════════════════════════");
+            Console.ResetColor();
+
             Console.Write("Username: ");
             string usernameInput = Console.ReadLine();
             Console.Write("Password: ");
-            string passwordInput = Console.ReadLine();
+            string passwordInput = MaskPassword();
 
-            
+
             string adminUsername = "admin";
             string adminPassword = "admin123";
 
@@ -136,11 +149,45 @@ namespace MiniProject_TicketBooking
                 Console.WriteLine("Invalid admin login credentials.");
             }
         }
+        static string MaskPassword()
+        {
+            string password = "";
+            ConsoleKeyInfo key;
+
+            do
+            {
+                key = Console.ReadKey(true);
+
+                // Ignore any key other than Backspace or Enter
+                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                {
+                    password += key.KeyChar;
+                    Console.Write("*");
+                }
+                else
+                {
+                    if (key.Key == ConsoleKey.Backspace && password.Length > 0)
+                    {
+                        password = password.Remove(password.Length - 1);
+                        Console.Write("\b \b");
+                    }
+                }
+            }
+            while (key.Key != ConsoleKey.Enter);
+
+            Console.WriteLine(); // For newline after password input
+            return password;
+        }
 
 
         static void UserLogin()
         {
-            Console.WriteLine("\nUser Login:");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("══════════════════════════════");
+            Console.WriteLine("          User Login:          ");
+            Console.WriteLine("══════════════════════════════");
+            Console.ResetColor();
+
             Console.WriteLine("Are you an existing user? (yes/no)");
             string existingUserChoice = Console.ReadLine().ToLower();
 
@@ -357,25 +404,31 @@ namespace MiniProject_TicketBooking
             {
                 var bookings = context.Bookings.ToList();
                 Console.WriteLine("Booked Tickets:");
+                Console.WriteLine("======================================================================================================================");
+                Console.WriteLine("| Booking ID | Train ID | Class   | Passenger Name | Seats Booked | Booking Date         | Date of Travel       | Total Amount |");
+                Console.WriteLine("======================================================================================================================");
                 foreach (var booking in bookings)
                 {
-                    Console.WriteLine($"Booking ID: {booking.BookingId}, Train ID: {booking.TrainId}, Class: {booking.Class}, Passenger Name: {booking.PassengerName}, Seats Booked: {booking.SeatsBooked}, Booking Date: {booking.BookingDate}, Date of Travel: {booking.DateOfTravel}, Total Amount: {booking.TotalAmount}");
+                    Console.WriteLine($"| {booking.BookingId,-11} | {booking.TrainId,-8} | {booking.Class,-7} | {booking.PassengerName,-15} | {booking.SeatsBooked,-12} | {booking.BookingDate,-20} | {booking.DateOfTravel,-20} | {booking.TotalAmount,-13} |");
                 }
+                Console.WriteLine("======================================================================================================================");
 
-                var cancellations = context.Cancellations.Include("Booking").ToList(); 
+                var cancellations = context.Cancellations.Include("Booking").ToList();
                 Console.WriteLine("\nCancelled Tickets:");
+                Console.WriteLine("======================================================================================================================");
+                Console.WriteLine("| Cancellation ID | Booking ID | Seats Cancelled | Cancellation Date      | Cancellation Reason                          |");
+                Console.WriteLine("======================================================================================================================");
                 foreach (var cancellation in cancellations)
                 {
-                    Console.WriteLine($"Cancellation ID: {cancellation.CancellationId}, Booking ID: {cancellation.BookingId}, Seats Cancelled: {cancellation.SeatsCancelled}, Cancellation Date: {cancellation.CancellationDate}, Cancellation Reason: {cancellation.CancellationReason}");
-
-                    
+                    Console.WriteLine($"| {cancellation.CancellationId,-16} | {cancellation.BookingId,-10} | {cancellation.SeatsCancelled,-15} | {cancellation.CancellationDate,-23} | {cancellation.CancellationReason,-43} |");
                 }
+                Console.WriteLine("======================================================================================================================");
             }
         }
+
         static void BookTicket(string loginId, string password)
         {
             Console.WriteLine("Booking a ticket...");
-
 
             DisplayAllTrains();
 
@@ -394,6 +447,7 @@ namespace MiniProject_TicketBooking
 
             decimal totalAmount = 0;
             int bookingId = 0;
+            string passengerNameOutput = string.Empty; // Variable to store the output value of @PassengerNameOutput
 
             try
             {
@@ -401,71 +455,84 @@ namespace MiniProject_TicketBooking
                 {
                     connection.Open();
 
-
-                    SqlCommand checkTrainCommand = new SqlCommand("SELECT IsActive FROM Trains WHERE TrainId = @TrainId", connection);
+                    SqlCommand checkTrainCommand = new SqlCommand("SELECT IsActive, [From], [To] FROM Trains WHERE TrainId = @TrainId", connection);
                     checkTrainCommand.Parameters.AddWithValue("@TrainId", trainId);
-                    bool isTrainActive = (bool)checkTrainCommand.ExecuteScalar();
+                    SqlDataReader reader = checkTrainCommand.ExecuteReader();
 
-                    if (!isTrainActive)
+                    if (reader.Read())
                     {
-                        Console.WriteLine("Booking is not allowed for this train as it is inactive.");
-                        return;
+                        bool isTrainActive = (bool)reader["IsActive"];
+                        string fromStation = reader["From"].ToString();
+                        string toStation = reader["To"].ToString();
+
+                        if (!isTrainActive)
+                        {
+                            Console.WriteLine("Booking is not allowed for this train as it is inactive.");
+                            reader.Close();
+                            return;
+                        }
+
+                        reader.Close();
+
+                        using (SqlCommand command = new SqlCommand("BookTicket", connection))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+
+                            command.Parameters.AddWithValue("@LoginId", loginId);
+                            command.Parameters.AddWithValue("@Password", password);
+                            command.Parameters.AddWithValue("@TrainId", trainId);
+                            command.Parameters.AddWithValue("@Class", trainClass);
+                            command.Parameters.AddWithValue("@PassengerName", passengerName);
+                            command.Parameters.AddWithValue("@SeatsBooked", seatsBooked);
+                            command.Parameters.AddWithValue("@BookingDate", bookingDate);
+                            command.Parameters.AddWithValue("@DateOfTravel", dateOfTravel);
+
+                            // Add @PassengerNameOutput parameter for output
+                            SqlParameter passengerNameOutputParam = new SqlParameter("@PassengerNameOutput", SqlDbType.VarChar, 100);
+                            passengerNameOutputParam.Direction = ParameterDirection.Output;
+                            command.Parameters.Add(passengerNameOutputParam);
+
+                            SqlParameter totalAmountParam = new SqlParameter("@Amount", SqlDbType.Decimal);
+                            totalAmountParam.Direction = ParameterDirection.Output;
+                            command.Parameters.Add(totalAmountParam);
+
+                            SqlParameter bookingIdParam = new SqlParameter("@BookingId", SqlDbType.Int);
+                            bookingIdParam.Direction = ParameterDirection.Output;
+                            command.Parameters.Add(bookingIdParam);
+
+                            SqlParameter seatsBookedOutputParam = new SqlParameter("@SeatsBookedOutput", SqlDbType.Int);
+                            seatsBookedOutputParam.Direction = ParameterDirection.Output;
+                            command.Parameters.Add(seatsBookedOutputParam);
+
+
+                            SqlParameter dateOfTravelOutputParam = new SqlParameter("@DateOfTravelOutput", SqlDbType.Date);
+                            dateOfTravelOutputParam.Direction = ParameterDirection.Output;
+                            command.Parameters.Add(dateOfTravelOutputParam);
+
+                            command.ExecuteNonQuery();
+
+                            totalAmount = (decimal)totalAmountParam.Value;
+                            bookingId = (int)bookingIdParam.Value;
+                            passengerNameOutput = passengerNameOutputParam.Value.ToString(); // Retrieve output value
+                            Console.WriteLine("------------------------------------");
+                            Console.WriteLine("Your Ticket Booking Details:");
+                            Console.WriteLine("------------------------------------");
+                            Console.WriteLine($"Booking ID: {bookingId}");
+                            Console.WriteLine($"Train ID: {trainId}");
+                            Console.WriteLine($"Class: {trainClass}");
+                            Console.WriteLine($"Passenger Name: {passengerNameOutput}"); // Use the output value
+                            Console.WriteLine($"Seats Booked: {seatsBooked}");
+                            Console.WriteLine($"Booking Date: {bookingDate}");
+                            Console.WriteLine($"Date of Travel: {dateOfTravel}");
+                            Console.WriteLine($"Amount Paid: {totalAmount:C}");
+                            Console.WriteLine($"From: {fromStation}");
+                            Console.WriteLine($"To: {toStation}");
+                            Console.WriteLine("------------------------------------");
+                        }
                     }
-
-                    using (SqlCommand command = new SqlCommand("BookTicket", connection))
+                    else
                     {
-                        command.CommandType = CommandType.StoredProcedure;
-
-
-                        command.Parameters.AddWithValue("@LoginId", loginId);
-                        command.Parameters.AddWithValue("@Password", password);
-                        command.Parameters.AddWithValue("@TrainId", trainId);
-                        command.Parameters.AddWithValue("@Class", trainClass);
-                        command.Parameters.AddWithValue("@PassengerName", passengerName);
-                        command.Parameters.AddWithValue("@SeatsBooked", seatsBooked);
-                        command.Parameters.AddWithValue("@BookingDate", bookingDate);
-                        command.Parameters.AddWithValue("@DateOfTravel", dateOfTravel);
-
-
-                        SqlParameter totalAmountParam = new SqlParameter("@Amount", SqlDbType.Decimal);
-                        totalAmountParam.Direction = ParameterDirection.Output;
-                        command.Parameters.Add(totalAmountParam);
-
-                        SqlParameter bookingIdParam = new SqlParameter("@BookingId", SqlDbType.Int);
-                        bookingIdParam.Direction = ParameterDirection.Output;
-                        command.Parameters.Add(bookingIdParam);
-
-                        SqlParameter passengerNameOutputParam = new SqlParameter("@PassengerNameOutput", SqlDbType.VarChar, 100);
-                        passengerNameOutputParam.Direction = ParameterDirection.Output;
-                        command.Parameters.Add(passengerNameOutputParam);
-
-                        SqlParameter seatsBookedOutputParam = new SqlParameter("@SeatsBookedOutput", SqlDbType.Int);
-                        seatsBookedOutputParam.Direction = ParameterDirection.Output;
-                        command.Parameters.Add(seatsBookedOutputParam);
-
-                        SqlParameter dateOfTravelOutputParam = new SqlParameter("@DateOfTravelOutput", SqlDbType.Date);
-                        dateOfTravelOutputParam.Direction = ParameterDirection.Output;
-                        command.Parameters.Add(dateOfTravelOutputParam);
-
-                        command.ExecuteNonQuery();
-
-
-                        totalAmount = (decimal)totalAmountParam.Value;
-                        bookingId = (int)bookingIdParam.Value;
-                        string passengerNameOutput = passengerNameOutputParam.Value.ToString();
-                        int seatsBookedOutput = (int)seatsBookedOutputParam.Value;
-                        DateTime dateOfTravelOutput = (DateTime)dateOfTravelOutputParam.Value;
-
-
-                        Console.WriteLine("Your Ticket Booking Details:");
-                        Console.WriteLine($"Booking ID: {bookingId}");
-                        Console.WriteLine($"Train ID: {trainId}");
-                        Console.WriteLine($"Class: {trainClass}");
-                        Console.WriteLine($"Passenger Name: {passengerNameOutput}");
-                        Console.WriteLine($"Seats Booked: {seatsBookedOutput}");
-                        Console.WriteLine($"Booking Date: {bookingDate}");
-                        Console.WriteLine($"Date of Travel: {dateOfTravelOutput}");
-                        Console.WriteLine($"Amount Paid: {totalAmount:C}");
+                        Console.WriteLine("Train details not found.");
                     }
                 }
 
@@ -473,23 +540,17 @@ namespace MiniProject_TicketBooking
             }
             catch (SqlException ex)
             {
-
                 if (ex.Number == 12345)
                 {
                     Console.WriteLine("Booking is not allowed for this train as it is inactive.");
                 }
                 else
                 {
-
                     Console.WriteLine("An error occurred while booking the ticket.");
                     Console.WriteLine(ex.Message);
                 }
             }
         }
-
-
-
-
 
 
 
@@ -532,11 +593,13 @@ namespace MiniProject_TicketBooking
                        
                         refundAmount = (decimal)refundAmountParam.Value;
 
-                       
+                        Console.WriteLine("------------------------------------");
                         Console.WriteLine("Your Ticket Cancellation Details:");
+                        Console.WriteLine("------------------------------------");
                         Console.WriteLine($"Booking ID: {bookingId}");
                         Console.WriteLine($"Seats Cancelled: {seatsToCancel}");
                         Console.WriteLine($"Refund Amount: {refundAmount:C}");
+                        Console.WriteLine("------------------------------------");
                     }
                 }
 
@@ -555,22 +618,21 @@ namespace MiniProject_TicketBooking
             using (var context = new MiniProjectTicketBookingEntities())
             {
                 var trains = context.Trains.ToList();
+
+                Console.WriteLine("------------------------------------------------------------------------------------------");
+                Console.WriteLine("| Train ID |  Class  |       Name       | From |   To  | Manager | Berths |  Status   |");
+                Console.WriteLine("|----------|---------|------------------|------|-------|---------|--------|-----------|");
+
                 foreach (var train in trains)
                 {
-                    Console.WriteLine($"Train ID: {train.TrainId}");
-                    Console.WriteLine($"Class: {train.Class}");
-                    Console.WriteLine($"Name: {train.TrainName}");
-                    Console.WriteLine($"From: {train.From}");
-                    Console.WriteLine($"To: {train.To}");
-                    Console.WriteLine($"Manager: {train.Name}");
-                    Console.WriteLine($"Total Berths: {train.TotalBerths}");
-                    Console.WriteLine($"Available Berths: {train.AvailableBerths}");
-                    Console.WriteLine($"Fare: {train.Fare}");
-                    Console.WriteLine($"IsActive: {train.IsActive}");
-                    Console.WriteLine(); 
+                    Console.WriteLine($"| {train.TrainId,-9} | {train.Class,-7} | {train.TrainName,-16} | {train.From,-4} | {train.To,-5} | {train.Name,-8} | {train.TotalBerths,-6} | {((bool)train.IsActive ? "Active" : "Inactive"),-9} |");
                 }
+
+                Console.WriteLine("------------------------------------------------------------------------------------------");
             }
         }
+
+
         static void GenerateTotalRevenue()
         {
             try
