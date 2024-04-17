@@ -133,7 +133,7 @@ namespace MiniProject_TicketBooking
                             break;
                         case "8":
                             DisplayAllTrains();
-                            return;
+                            break;
 
                         case "9":
                             Console.WriteLine("Logging out...");
