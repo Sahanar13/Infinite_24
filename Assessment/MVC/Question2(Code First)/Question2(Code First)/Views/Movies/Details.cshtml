@@ -1,0 +1,16 @@
+﻿@model Question2_Code_First_.Models.Movie
+
+@{
+    ViewBag.Title = "Movie Details";
+}
+
+<h2>Movie Details</h2>
+
+<div>
+    <h4>Movie Name: @Model.Moviename</h4>
+    <p>Date of Release: @Model.DateofRelease.ToShortDateString()</p>
+</div>
+
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

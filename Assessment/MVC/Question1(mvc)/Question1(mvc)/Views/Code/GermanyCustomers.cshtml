@@ -1,0 +1,32 @@
+﻿@model List<Question1_mvc_.Models.Customer>
+
+<h2>German Customers</h2>
+<table>
+    <tr>
+        <th>Customer ID</th>
+        <th>Company Name</th>
+        <th>Contact Name</th>
+        <th>Contact Title</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>Postal Code</th>
+        <th>Country</th>
+        <th>Phone</th>
+        <th>Fax</th>
+    </tr>
+    @foreach (var customer in Model)
+    {
+        <tr>
+            <td>@customer.CustomerID</td>
+            <td>@customer.CompanyName</td>
+            <td>@customer.ContactName</td>
+            <td>@customer.ContactTitle</td>
+            <td>@customer.Address</td>
+            <td>@customer.City</td>
+            <td>@customer.PostalCode</td>
+            <td>@customer.Country</td>
+            <td>@customer.Phone</td>
+            <td>@customer.Fax</td>
+        </tr>
+    }
+</table>

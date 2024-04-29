@@ -1,0 +1,37 @@
+﻿@model Question1_mvc_.Models.Customer
+
+<h2>Customer Details for Order ID 10248</h2>
+
+@if (Model != null)
+{
+    <table>
+        <tr>
+            <th>Customer ID</th>
+            <th>Company Name</th>
+            <th>Contact Name</th>
+            <th>Contact Title</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Postal Code</th>
+            <th>Country</th>
+            <th>Phone</th>
+            <th>Fax</th>
+        </tr>
+        <tr>
+            <td>@Model.CustomerID</td>
+            <td>@Model.CompanyName</td>
+            <td>@Model.ContactName</td>
+            <td>@Model.ContactTitle</td>
+            <td>@Model.Address</td>
+            <td>@Model.City</td>
+            <td>@Model.PostalCode</td>
+            <td>@Model.Country</td>
+            <td>@Model.Phone</td>
+            <td>@Model.Fax</td>
+        </tr>
+    </table>
+}
+else
+{
+    <p>Customer details not found for Order ID 10248.</p>
+}
