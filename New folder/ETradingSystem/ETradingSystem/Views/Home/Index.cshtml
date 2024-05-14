@@ -1,0 +1,203 @@
+﻿@{ ViewBag.Title = "Home";}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ekart - Online Shopping Site</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/styles.css">
+    <style>
+        .ProductType {
+            margin: 0;
+            padding: 0;
+        }
+
+            .ProductType ul {
+                list-style: none;
+                margin-top: 70px;
+                padding: 0;
+            }
+
+                .ProductType ul li {
+                    display: inline;
+                }
+
+                    .ProductType ul li a {
+                        display: inline-block;
+                        padding: 20px 20px;
+                        text-decoration: none;
+                        font-weight: bold;
+                        color: black;
+                        transition: color 0.3s ease;
+                    }
+
+                        .ProductType ul li a:hover {
+                            color: skyblue;
+                        }
+
+        /* Adjusted Logo Style */
+        .logo img {
+            width: 100px;
+            height: auto;
+            margin-top: 70px ; /* Adjusted to use the logo's margin */
+        }
+
+
+
+
+        .banner img{
+
+            height:300px;
+        }
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.search-bar {
+    display: flex;
+}
+
+.search-bar input[type="text"] {
+    padding: 8px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-bar button {
+    padding: 8px 20px;
+    background-color: #ff6600;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+        .bucketlist-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .bucketlist-button:hover {
+                background-color: #0056b3;
+            }
+
+section.banner img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+section.products {
+    margin-top: 20px;
+}
+
+section.products h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* Footer Styles */
+footer {
+    margin-top: 50px;
+    text-align: center;
+    padding: 20px 0;
+    background-color: #333;
+    color: #fff;
+}
+
+/* Responsive Styles */
+@*@media screen and (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }*@
+
+    nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+
+        .search-bar {
+            flex-direction: column;
+            margin-top: 70px;
+        }
+
+    .search-bar input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .search-bar button {
+        width: 100%;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="~/images/LOGO_EKart1.jpg" alt="Ekart_Trading Logo">
+            </div>
+            <div class="search-bar">
+                @using (Html.BeginForm("Search", "Home", FormMethod.Post))
+                {
+                    <input type="text" name="searchTerm" placeholder="Search for product">
+                    <button type="submit">Search</button>
+                }
+            </div>
+
+        </header>
+
+        <section class="banner">
+            <img src="~/images/Banner_Ecart1.jpg" alt="Banner Image">
+        </section>
+
+        <section class="products">
+        </section>
+
+        <section class="products">
+        </section>
+
+
+        <!-- Added Bucket List Button -->
+        <button class="bucketlist-button" onclick="location.href='@Url.Action("BucketList", "Home")'">Bucket List</button>
+
+    </div>
+</body>
+</html>

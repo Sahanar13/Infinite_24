@@ -1,0 +1,221 @@
+﻿﻿@{ ViewBag.Title = "Welcome"; }
+
+<body>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        header {
+            background-color: #303f9f;
+            color: #fff;
+            padding: 20px 0;
+        }
+
+            header h1 {
+                font-size: 2.5rem;
+                text-align: center;
+                margin-bottom: 0;
+            }
+
+        nav ul {
+            list-style: none;
+            text-align: center;
+        }
+
+            nav ul li {
+                display: inline;
+                margin-right: 20px;
+            }
+
+                nav ul li a {
+                    color: #fff;
+                    text-decoration: none;
+                    font-size: 1.1rem;
+                    transition: color 0.3s ease;
+                }
+
+                    nav ul li a:hover {
+                        color: #f4f4f4;
+                    }
+
+        .hero {
+            background-image: url('hero-image.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            text-align: center;
+            padding: 150px 0;
+        }
+
+            .hero h2 {
+                font-size: 3rem;
+                margin-bottom: 20px;
+                color: black;
+            }
+
+            .hero p {
+                font-size: 1.5rem;
+                margin-bottom: 40px;
+                color: black;
+            }
+
+        .features {
+            background-color: #fff;
+            padding: 60px 0;
+        }
+
+            .features h2 {
+                text-align: center;
+                margin-bottom: 40px;
+                font-size: 3rem;
+                color: #333;
+            }
+
+        .feature {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+            .feature h3 {
+                font-size: 2.5rem;
+                margin-bottom: 10px;
+                color: #303f9f;
+            }
+
+            .feature p {
+                font-size: 1.5rem;
+                color: #666;
+            }
+
+        .about {
+            background-color: #f5f5f5;
+            padding: 80px 0;
+        }
+
+            .about h2 {
+                text-align: center;
+                margin-bottom: 40px;
+                font-size: 3rem;
+                color: #333;
+            }
+
+            .about p {
+                text-align: center;
+                font-size: 1.5rem;
+                color: #666;
+                margin-bottom: 30px;
+            }
+
+        .contact {
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('contact-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0;
+            color: #fff;
+        }
+
+            .contact h2 {
+                text-align: center;
+                margin-bottom: 40px;
+                font-size: 3rem;
+            }
+
+            .contact p {
+                text-align: center;
+                font-size: 1.5rem;
+                margin-bottom: 30px;
+            }
+
+            .contact form {
+                max-width: 600px;
+                margin: auto;
+            }
+
+            .contact input,
+            .contact textarea {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 20px;
+                border: none;
+                border-radius: 5px;
+            }
+
+            .contact button {
+                display: block;
+                width: 100%;
+                padding: 10px;
+                background-color: #303f9f;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                font-size: 1.5rem;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+                .contact button:hover {
+                    background-color: #5c6bc0;
+                }
+
+        footer {
+            background-color: #303f9f;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+    </style>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <img class="center-image" src="~/Images/logo.jpg" alt="Center Image">
+                <h2>Welcome to E-Trading System</h2>
+                <p>Effortlessly navigate your shopping needs with our intuitive online platform</p>
+                <a href="index" class="btn btn-primary btn-lg">Get Started</a>
+
+            </div>
+        </section>
+        <section class="features">
+            <div class="container">
+                <h2>Key Features</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="feature">
+                            <h3>Customer Management</h3>
+                            <p>Simplify your shopping experience by swiftly providing essential details for seamless transactions</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature">
+                            <h3>Vendor Management</h3>
+                            <p>Vendors can oversee and manage customers and price of products.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature">
+                            <h3>Admin Management</h3>
+                            <p>Administrators oversee the system, manage customers and vendors, manage business category.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="about">
+            <div class="container">
+                <h2>About Our Online Shopping Platform</h2>
+                <p>We offer a convenient shopping experience for customers, Vendors, and administrators.</p>
+                <p>Our platform simplifies product browsing, purchasing, and inventory management processes.</p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.4/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

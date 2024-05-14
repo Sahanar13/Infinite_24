@@ -1,0 +1,108 @@
+﻿@model IEnumerable<ETradingSystem.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_VendorLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        /* Custom CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        td:last-child {
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: inline-block;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <br /><br />
+        <h2><center>Product List</center></h2>
+        <p>
+            <a href="@Url.Action("Create")" class="btn btn-primary">Create New</a>
+        </p>
+        <table>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Product_Name)</th>
+                <th>@Html.DisplayNameFor(model => model.Brand)</th>
+                <th>@Html.DisplayNameFor(model => model.Color)</th>
+                <th>@Html.DisplayNameFor(model => model.Price)</th>
+                <th>@Html.DisplayNameFor(model => model.Available_Stock)</th>
+                <th>@Html.DisplayNameFor(model => model.Status)</th>
+                <th>@Html.DisplayNameFor(model => model.ImageFileName)</th>
+                <th>@Html.DisplayNameFor(model => model.isdeleted)</th>
+                <th>@Html.DisplayNameFor(model => model.Vendor.Vendor_Name)</th>
+                <th>Actions</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Product_Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Brand)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Color)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Available_Stock)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ImageFileName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.isdeleted)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Vendor.Vendor_Name)</td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = item.Product_Id })" class="btn btn-primary action-buttons">Edit</a>
+                        <a href="@Url.Action("Details", new { id = item.Product_Id })" class="btn btn-info action-buttons">Details</a>
+                        <button onclick="confirmDelete('@item.Product_Id')" class="btn btn-danger action-buttons">Delete</button>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    <script>
+        function confirmDelete(productId) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                window.location.href = '@Url.Action("Delete", "ControllerName")' + '?id=' + productId;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+﻿@model int
+
+@{
+    ViewBag.Title = "Remove From Bucket List";
+}
+
+<h2>Remove From Bucket List</h2>
+
+<p>Are you sure you want to remove this item from the bucket list?</p>
+
+@using (Html.BeginForm("RemoveFromBucketList", "BucketList", new { itemId = Model }, FormMethod.Post))
+{
+    <button type="submit" class="btn btn-danger">Remove</button>
+    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+}

@@ -1,0 +1,100 @@
+﻿@model ETradingSystem.Models.Vendor
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .details-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dl-horizontal dt {
+            width: 150px;
+            font-weight: bold;
+        }
+
+        .dl-horizontal dd {
+            margin-left: 180px;
+        }
+
+        .action-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+            .action-links a {
+                margin-right: 10px;
+            }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h2>Details</h2>
+        <div>
+            <h4>Vendor</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>@Html.DisplayNameFor(model => model.Vendor_Name)</dt>
+                <dd>@Html.DisplayFor(model => model.Vendor_Name)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.Vendor_Email)</dt>
+                <dd>@Html.DisplayFor(model => model.Vendor_Email)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.Mobile_Number)</dt>
+                <dd>@Html.DisplayFor(model => model.Mobile_Number)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.Address)</dt>
+                <dd>@Html.DisplayFor(model => model.Address)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.Category)</dt>
+                <dd>@Html.DisplayFor(model => model.Category)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.Vendor_Age)</dt>
+                <dd>@Html.DisplayFor(model => model.Vendor_Age)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.Passowrd)</dt>
+                <dd>@Html.DisplayFor(model => model.Passowrd)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.Hint_Answer)</dt>
+                <dd>@Html.DisplayFor(model => model.Hint_Answer)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.Status)</dt>
+                <dd>@Html.DisplayFor(model => model.Status)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.Hint.Questions)</dt>
+                <dd>@Html.DisplayFor(model => model.Hint.Questions)</dd>
+
+            </dl>
+        </div>
+        <div class="action-links">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Vendor_Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    </div>
+</body>
+</html>

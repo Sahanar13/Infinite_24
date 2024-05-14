@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="E_TradingDBModelStoreContainer" CdmEntityContainer="E_TradingDBEntities2">
+    <EntitySetMapping Name="Admins">
+      <EntityTypeMapping TypeName="E_TradingDBModel.Admin">
+        <MappingFragment StoreEntitySet="Admin">
+          <ScalarProperty Name="Admin_Id" ColumnName="Admin_Id" />
+          <ScalarProperty Name="Admin_Email" ColumnName="Admin_Email" />
+          <ScalarProperty Name="Admin_Name" ColumnName="Admin_Name" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Hint_Id" ColumnName="Hint_Id" />
+          <ScalarProperty Name="Hint_Answers" ColumnName="Hint_Answers" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="E_TradingDBModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+          <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
+          <ScalarProperty Name="Customer_Email" ColumnName="Customer_Email" />
+          <ScalarProperty Name="Date_Of_Birth" ColumnName="Date_Of_Birth" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="Mobile_Number" ColumnName="Mobile_Number" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Hint_Id" ColumnName="Hint_Id" />
+          <ScalarProperty Name="Hint_Answer" ColumnName="Hint_Answer" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Hints">
+      <EntityTypeMapping TypeName="E_TradingDBModel.Hint">
+        <MappingFragment StoreEntitySet="Hints">
+          <ScalarProperty Name="Hint_Id" ColumnName="Hint_Id" />
+          <ScalarProperty Name="Questions" ColumnName="Questions" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order_Cancellation">
+      <EntityTypeMapping TypeName="E_TradingDBModel.Order_Cancellation">
+        <MappingFragment StoreEntitySet="Order_Cancellation">
+          <ScalarProperty Name="Cancellation_Id" ColumnName="Cancellation_Id" />
+          <ScalarProperty Name="Order_Id" ColumnName="Order_Id" />
+          <ScalarProperty Name="Cancellation_Date" ColumnName="Cancellation_Date" />
+          <ScalarProperty Name="Refund_Amount" ColumnName="Refund_Amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order_Details">
+      <EntityTypeMapping TypeName="E_TradingDBModel.Order_Details">
+        <MappingFragment StoreEntitySet="Order_Details">
+          <ScalarProperty Name="Order_Id" ColumnName="Order_Id" />
+          <ScalarProperty Name="Purchase_Id" ColumnName="Purchase_Id" />
+          <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
+          <ScalarProperty Name="Product_Price" ColumnName="Product_Price" />
+          <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="E_TradingDBModel.Order">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="Purchase_Id" ColumnName="Purchase_Id" />
+          <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+          <ScalarProperty Name="Delivery_Date" ColumnName="Delivery_Date" />
+          <ScalarProperty Name="Order_Amount" ColumnName="Order_Amount" />
+          <ScalarProperty Name="Payment_Mode" ColumnName="Payment_Mode" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="E_TradingDBModel.Product">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
+          <ScalarProperty Name="Vendor_Id" ColumnName="Vendor_Id" />
+          <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
+          <ScalarProperty Name="Brand" ColumnName="Brand" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Available_Stock" ColumnName="Available_Stock" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ImageFileName" ColumnName="ImageFileName" />
+          <ScalarProperty Name="isdeleted" ColumnName="isdeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vendors">
+      <EntityTypeMapping TypeName="E_TradingDBModel.Vendor">
+        <MappingFragment StoreEntitySet="Vendors">
+          <ScalarProperty Name="Vendor_Id" ColumnName="Vendor_Id" />
+          <ScalarProperty Name="Vendor_Name" ColumnName="Vendor_Name" />
+          <ScalarProperty Name="Vendor_Email" ColumnName="Vendor_Email" />
+          <ScalarProperty Name="Mobile_Number" ColumnName="Mobile_Number" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Vendor_Age" ColumnName="Vendor_Age" />
+          <ScalarProperty Name="Passowrd" ColumnName="Passowrd" />
+          <ScalarProperty Name="Hint_Id" ColumnName="Hint_Id" />
+          <ScalarProperty Name="Hint_Answer" ColumnName="Hint_Answer" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Wallets">
+      <EntityTypeMapping TypeName="E_TradingDBModel.Wallet">
+        <MappingFragment StoreEntitySet="Wallet">
+          <ScalarProperty Name="wallet_Id" ColumnName="wallet_Id" />
+          <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+          <ScalarProperty Name="Date_of_Top_Up" ColumnName="Date_of_Top_Up" />
+          <ScalarProperty Name="Last_Top_Up" ColumnName="Last_Top_Up" />
+          <ScalarProperty Name="Total_Top_Up" ColumnName="Total_Top_Up" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BucketLists">
+      <EntityTypeMapping TypeName="E_TradingDBModel.BucketList">
+        <MappingFragment StoreEntitySet="BucketList">
+          <ScalarProperty Name="Serial_Number" ColumnName="Serial_Number" />
+          <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
+          <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="CancelOrder" FunctionName="E_TradingDBModel.Store.CancelOrder" />
+    <FunctionImportMapping FunctionImportName="GetCustomerIdByEmail" FunctionName="E_TradingDBModel.Store.GetCustomerIdByEmail" />
+    <FunctionImportMapping FunctionImportName="GetProductsByVendorId" FunctionName="E_TradingDBModel.Store.GetProductsByVendorId">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="E_TradingDBModel.GetProductsByVendorId_Result">
+          <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
+          <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
+          <ScalarProperty Name="Brand" ColumnName="Brand" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Available_Stock" ColumnName="Available_Stock" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ImageFileName" ColumnName="ImageFileName" />
+          <ScalarProperty Name="isdeleted" ColumnName="isdeleted" />
+          <ScalarProperty Name="Vendor_Name" ColumnName="Vendor_Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertBucketListItem" FunctionName="E_TradingDBModel.Store.InsertBucketListItem" />
+    <FunctionImportMapping FunctionImportName="InsertIntoBucketList" FunctionName="E_TradingDBModel.Store.InsertIntoBucketList" />
+    <FunctionImportMapping FunctionImportName="PlaceOrder" FunctionName="E_TradingDBModel.Store.PlaceOrder" />
+  </EntityContainerMapping>
+</Mapping>

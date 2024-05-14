@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ce0f569e7b3548e09339ce670efc37ca" Name="Diagram1">
+        <EntityTypeShape EntityType="E_TradingDBModel.Admin" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="E_TradingDBModel.Customer" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="E_TradingDBModel.Hint" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="E_TradingDBModel.Order_Cancellation" Width="1.5" PointX="9.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="E_TradingDBModel.Order_Details" Width="1.5" PointX="7.5" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="E_TradingDBModel.Order" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="E_TradingDBModel.Product" Width="1.5" PointX="5.25" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="E_TradingDBModel.Vendor" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="E_TradingDBModel.Wallet" Width="1.5" PointX="5.25" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="E_TradingDBModel.BucketList" Width="1.5" PointX="7.5" PointY="13.5" IsExpanded="true" />
+        <AssociationConnector Association="E_TradingDBModel.FK__Admin__Hint_Id__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="E_TradingDBModel.FK__BucketLis__Custo__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="E_TradingDBModel.FK__Customer__Hint_I__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="E_TradingDBModel.FK__Orders__Customer__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="E_TradingDBModel.FK__Wallet__Customer__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="E_TradingDBModel.FK__Vendors__Hint_Id__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="E_TradingDBModel.FK__Order_Can__Order__73BA3083" ManuallyRouted="false" />
+        <AssociationConnector Association="E_TradingDBModel.FK__Order_Det__Produ__75A278F5" ManuallyRouted="false" />
+        <AssociationConnector Association="E_TradingDBModel.FK__Order_Det__Purch__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="E_TradingDBModel.FK__BucketLis__Produ__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="E_TradingDBModel.FK__Products__Vendor__619B8048" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,184 @@
+﻿@model ETradingSystem.Models.Customer
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<style>
+    /* Custom styles for form */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: ThreeDDarkShadow;
+    }
+
+    .form-container {
+        background: linear-gradient(600deg, #ffffff, #f0f0f0);
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        padding: 30px;
+        margin: 50px auto;
+        max-width: 600px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: black;
+        background: linear-gradient(45deg, #007bff, #0056b3);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .control-label {
+        font-weight: bold;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .btn-submit {
+        background: linear-gradient(45deg, #007bff, #0056b3);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+        .btn-submit:hover {
+            background: linear-gradient(45deg, #0056b3, #003d7f);
+        }
+
+    .btn-login {
+        background: linear-gradient(45deg, #28a745, #218838);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+        .btn-login:hover {
+            background: linear-gradient(45deg, #218838, #1e7e34);
+        }
+
+    .required-field:after {
+        content: "*";
+        color: red;
+        margin-left: 5px;
+    }
+
+    .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+    /* Style for inline buttons */
+    .button-container {
+        text-align: center;
+    }
+
+        .button-container .btn {
+            margin: 0 5px;
+        }
+</style>
+
+<div class="form-container">
+    <h2>Customer Registration</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Customer_Id, htmlAttributes: new { @class = "control-label required-field" })
+            @Html.EditorFor(model => model.Customer_Id, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Customer_Id, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Customer_Name, htmlAttributes: new { @class = "control-label required-field" })
+            @Html.EditorFor(model => model.Customer_Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Customer_Name, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Customer_Email, htmlAttributes: new { @class = "control-label required-field" })
+            @Html.EditorFor(model => model.Customer_Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Customer_Email, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Date_Of_Birth, htmlAttributes: new { @class = "control-label required-field" })
+            @Html.EditorFor(model => model.Date_Of_Birth, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+            @Html.ValidationMessageFor(model => model.Date_Of_Birth, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label required-field" })
+            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Balance, htmlAttributes: new { @class = "control-label required-field" })
+            @Html.EditorFor(model => model.Balance, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01" } })
+            @Html.ValidationMessageFor(model => model.Balance, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Mobile_Number, htmlAttributes: new { @class = "control-label required-field" })
+            @Html.EditorFor(model => model.Mobile_Number, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Mobile_Number, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label required-field" })
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", type = "password" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Hint_Id, "Hint_Id", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("Hint_Id", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Hint_Id, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Hint_Answer, htmlAttributes: new { @class = "control-label required-field" })
+            @Html.EditorFor(model => model.Hint_Answer, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Hint_Answer, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <div class="form-group" style="display: none;">
+                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label" })
+                @Html.HiddenFor(model => model.Status, new { @Value = "Active" })
+            </div>
+        </div>
+
+        <div class="form-group button-container">
+            <input type="submit" value="Register" class="btn-submit" />
+
+            @Html.ActionLink("Log-in", "Login", "CustomerValidation", null, new { @class = "btn btn-login" })
+        </div>
+    }
+
+</div>

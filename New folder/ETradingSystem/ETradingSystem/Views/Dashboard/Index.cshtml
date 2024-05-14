@@ -1,0 +1,134 @@
+﻿@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom Styles */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Adjusted Card Styles */
+        .card {
+            width: 100%;
+            max-width: 400px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .card-body {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .card-text {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            border-radius: 20px;
+            padding: 10px 20px;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #343a40;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* Login Section Styles */
+        .login-section {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Admin Dashboard</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Profile <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item ml-auto">
+                        <a class="nav-link" href="@Url.Action("Login", "AdminValidation")">Log-Out <span class="sr-only"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="start-screen">
+            <h2>Welcome to Admin Dashboard</h2>
+            <p>You can manage Customer, Vendors, and Product Categories from this dashboard.</p>
+        </div>
+        <div class="row mt-4 justify-content-center">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        Customer Management
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Manage Customers, Delete ,view Details.</p>
+                        <a href="@Url.Action("Index", "AdminCustomers")" class="btn btn-primary">Manage Customer</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        Vendor Management
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">View, approve, and reject travel requests.</p>
+                        <a href="@Url.Action("Index", "AdminVendors")" class="btn btn-success">Manage Vendor</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-3">
+        <div class="container">
+            <p>&copy; 2024 - E-Trading System</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

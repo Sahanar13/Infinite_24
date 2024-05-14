@@ -1,0 +1,39 @@
+﻿@model List<ETradingSystem.Models.BucketList>
+
+@{
+    ViewBag.Title = "Bucket List";
+}
+
+<h2>Bucket List</h2>
+
+<p>
+    <a href="@Url.Action("Index", "Home")">Back to Home</a>
+</p>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+@if (Model.Count == 0)
+{
+    <p>Your bucket list is empty.</p>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <!-- Add more columns as needed -->
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Product_Id</td>
+                <td>@item.Product.Product_Name</td>
+                <!-- Add more columns as needed -->
+            </tr>
+        }
+    </table>
+}

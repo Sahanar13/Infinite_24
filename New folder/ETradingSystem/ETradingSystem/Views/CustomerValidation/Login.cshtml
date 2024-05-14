@@ -1,0 +1,115 @@
+﻿@model ETradingSystem.Models.Customer
+@{
+    ViewBag.Title = "Customer";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 320px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+            .login-container h2 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+            .form-group label {
+                display: block;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+            .form-group input {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                box-sizing: border-box;
+            }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .forgot-password-link,
+        .need-help-link {
+            display: block;
+            text-align: center;
+            color:blue;
+            margin-top: 10px;
+        }
+
+        .field-validation-error {
+            color: red;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Welcome Customer!</h2>
+        <form method="post" action="@Url.Action("Login", "CustomerValidation")">
+            <hr />
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                @Html.ValidationMessageFor(model => model.Customer_Email) 
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                @Html.ValidationMessageFor(model => model.Password) 
+            </div>
+            <button type="submit">Login</button>
+            <a href="#" class="forgot-password-link">Forgot Password?</a>
+            <a href="@Url.Action("Help", "Home")" class="need-help-link">Need Help?</a>
+
+            @if (!string.IsNullOrEmpty(ViewBag.InvalidLogin))
+            {
+                <div class="field-validation-error">@ViewBag.InvalidLogin</div>
+            }
+        </form>
+    </div>
+</body>
+</html>
+
+

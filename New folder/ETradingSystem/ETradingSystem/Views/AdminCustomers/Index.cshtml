@@ -1,0 +1,133 @@
+﻿@model IEnumerable<ETradingSystem.Models.Customer>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            color: #333;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .action-buttons a {
+                margin-right: 5px;
+            }
+    </style>
+</head>
+<body>
+    <br /><br />
+    <h2>Customer Information</h2>
+
+    <!-- Form to search for customers by name -->
+    <div class="form-group">
+        <label for="customerName">Enter Customer Name:</label>
+        <input type="text" name="customerName" id="customerName" class="form-control" required>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Customer Email</th>
+                <th>Date of Birth</th>
+                <th>Address</th>
+                <th>Balance</th>
+                <th>Mobile Number</th>
+                <th>Password</th>
+                <th>Hint Answer</th>
+                <th>Status</th>
+                <th>Hint Questions</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Customer_Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Customer_Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Date_Of_Birth)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Balance)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Mobile_Number)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Password)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Hint_Answer)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Hint.Questions)</td>
+                    <td class="action-buttons">
+                        @Html.ActionLink("Details", "Details", new { id = item.Customer_Id }, new { @class = "btn btn-primary btn-sm" })
+                        @if (item.Status == "Active")
+                        {
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Customer_Id }, new { @class = "btn btn-danger btn-sm" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Activate", "Delete", new { id = item.Customer_Id }, new { @class = "btn btn-success btn-sm" })
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function () {
+            $("#customerName").on("input", function () {
+                var input = $(this).val().toLowerCase();
+                $("table tbody tr").each(function () {
+                    var name = $(this).find("td:first").text().toLowerCase();
+                    if (name.includes(input)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

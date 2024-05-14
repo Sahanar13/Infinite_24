@@ -1,0 +1,176 @@
+﻿
+@{
+    ViewBag.Title = "AboutUs";
+}
+
+<h2>WHAT WE DO</h2>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Our E-Trading Site</title>
+
+</head>
+
+<body>
+
+    <header>
+        <h1>About Us</h1>
+    </header>
+
+    <main>
+        <section class="section">
+            <h2>Our Team</h2>
+            <p>Our talented team crafts the best code and designs amazing user experiences for our clients.</p>
+        </section>
+        <section class="section">
+            <h2>Our Mission</h2>
+            <p>Our mission is to provide you with the tools, resources, and support you need to navigate the dynamic world of online trading confidently.</p>
+        </section>
+        <section class="section">
+            <h2>Customer-Centric Approach</h2>
+            <p>We prioritize your needs above all else. From our user-friendly platform to our responsive customer support team, every aspect of Our E-Trading Site is designed with you in mind.</p>
+        </section>
+        <section class="section">
+            <h2>Innovation and Technology</h2>
+            <p>We're constantly investing in the latest tools and technologies to ensure that you have access to the most advanced trading solutions available.</p>
+        </section>
+        <section class="section">
+            <h2>Transparency and Trust</h2>
+            <p>Our commitment to transparency is the cornerstone of trust. You can trade with confidence knowing that you're in good hands.</p>
+        </section>
+        <section class="section">
+            <h2>Community and Collaboration</h2>
+            <p>We foster a collaborative environment where traders can connect, share ideas, and learn from one another.</p>
+        </section>
+        <section class="section">
+            <h2>Commitment to Excellence</h2>
+            <p>Excellence is our standard. We're committed to delivering excellence in everything we do.</p>
+        </section>
+    </main>
+</body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Our E-Trading Site</title>
+    <style>
+        /* Reset CSS */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header styles */
+        header {
+            background-color: #032244;
+            color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        /* Main styles */
+        main {
+            padding: 20px;
+        }
+
+        .section {
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-bottom: 30px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+            .section:hover {
+                transform: scale(1.05);
+            }
+
+        .section-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .section:hover .section-image {
+            opacity: 1;
+        }
+
+        h2 {
+            color: #007bff;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #032244;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* Responsive styles */
+
+        h1 {
+            font-size: 2em;
+        }
+
+        h2 {
+            font-size: 1.8em;
+        }
+
+        p {
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+
+
+    <script>
+        function expandSection(section) {
+            section.classList.toggle('expanded');
+            setTimeout(function() {
+                section.classList.remove('expanded');
+            }, 3000); // 3 seconds
+        }
+    </script>
+
+</body>
+</html>
+
+

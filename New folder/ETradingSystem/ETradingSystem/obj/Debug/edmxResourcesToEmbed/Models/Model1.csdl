@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="E_TradingDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="Admin_Id" />
+    </Key>
+    <Property Name="Admin_Id" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="Admin_Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Admin_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Hint_Id" Type="Int32" />
+    <Property Name="Hint_Answers" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Hint" Relationship="Self.FK__Admin__Hint_Id__4D94879B" FromRole="Admin" ToRole="Hints" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Customer_Id" />
+    </Key>
+    <Property Name="Customer_Id" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="Customer_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Customer_Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Date_Of_Birth" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Balance" Type="Double" />
+    <Property Name="Mobile_Number" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Hint_Id" Type="Int32" />
+    <Property Name="Hint_Answer" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="BucketLists" Relationship="Self.FK__BucketLis__Custo__6477ECF3" FromRole="Customer" ToRole="BucketList" />
+    <NavigationProperty Name="Hint" Relationship="Self.FK__Customer__Hint_I__52593CB8" FromRole="Customer" ToRole="Hints" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Customer__6E01572D" FromRole="Customer" ToRole="Orders" />
+    <NavigationProperty Name="Wallets" Relationship="Self.FK__Wallet__Customer__5535A963" FromRole="Customer" ToRole="Wallet" />
+  </EntityType>
+  <EntityType Name="Hint">
+    <Key>
+      <PropertyRef Name="Hint_Id" />
+    </Key>
+    <Property Name="Hint_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Questions" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Admins" Relationship="Self.FK__Admin__Hint_Id__4D94879B" FromRole="Hints" ToRole="Admin" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK__Customer__Hint_I__52593CB8" FromRole="Hints" ToRole="Customer" />
+    <NavigationProperty Name="Vendors" Relationship="Self.FK__Vendors__Hint_Id__59063A47" FromRole="Hints" ToRole="Vendors" />
+  </EntityType>
+  <EntityType Name="Order_Cancellation">
+    <Key>
+      <PropertyRef Name="Cancellation_Id" />
+    </Key>
+    <Property Name="Cancellation_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Order_Id" Type="Int32" />
+    <Property Name="Cancellation_Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Refund_Amount" Type="Decimal" Precision="8" Scale="0" />
+    <NavigationProperty Name="Order_Details" Relationship="Self.FK__Order_Can__Order__73BA3083" FromRole="Order_Cancellation" ToRole="Order_Details" />
+  </EntityType>
+  <EntityType Name="Order_Details">
+    <Key>
+      <PropertyRef Name="Order_Id" />
+    </Key>
+    <Property Name="Order_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Purchase_Id" Type="Int32" />
+    <Property Name="Product_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Product_Price" Type="Double" />
+    <Property Name="Product_Id" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="Quantity" Type="Int32" />
+    <NavigationProperty Name="Order_Cancellation" Relationship="Self.FK__Order_Can__Order__73BA3083" FromRole="Order_Details" ToRole="Order_Cancellation" />
+    <NavigationProperty Name="Product" Relationship="Self.FK__Order_Det__Produ__75A278F5" FromRole="Order_Details" ToRole="Products" />
+    <NavigationProperty Name="Order" Relationship="Self.FK__Order_Det__Purch__70DDC3D8" FromRole="Order_Details" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Purchase_Id" />
+    </Key>
+    <Property Name="Purchase_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Customer_Id" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="Delivery_Date" Type="DateTime" Precision="0" />
+    <Property Name="Order_Amount" Type="Double" />
+    <Property Name="Payment_Mode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Orders__Customer__6E01572D" FromRole="Orders" ToRole="Customer" />
+    <NavigationProperty Name="Order_Details" Relationship="Self.FK__Order_Det__Purch__70DDC3D8" FromRole="Orders" ToRole="Order_Details" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Product_Id" />
+    </Key>
+    <Property Name="Product_Id" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="Vendor_Id" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="Product_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="Brand" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Color" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Double" />
+    <Property Name="Available_Stock" Type="Int32" />
+    <Property Name="Status" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="ImageFileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="isdeleted" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Order_Details" Relationship="Self.FK__Order_Det__Produ__75A278F5" FromRole="Products" ToRole="Order_Details" />
+    <NavigationProperty Name="BucketLists" Relationship="Self.FK__BucketLis__Produ__6383C8BA" FromRole="Products" ToRole="BucketList" />
+    <NavigationProperty Name="Vendor" Relationship="Self.FK__Products__Vendor__619B8048" FromRole="Products" ToRole="Vendors" />
+  </EntityType>
+  <EntityType Name="Vendor">
+    <Key>
+      <PropertyRef Name="Vendor_Id" />
+    </Key>
+    <Property Name="Vendor_Id" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="Vendor_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Vendor_Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Mobile_Number" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Category" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Vendor_Age" Type="Int32" Nullable="false" />
+    <Property Name="Passowrd" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Hint_Id" Type="Int32" />
+    <Property Name="Hint_Answer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Hint" Relationship="Self.FK__Vendors__Hint_Id__59063A47" FromRole="Vendors" ToRole="Hints" />
+    <NavigationProperty Name="Products" Relationship="Self.FK__Products__Vendor__619B8048" FromRole="Vendors" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Wallet">
+    <Key>
+      <PropertyRef Name="wallet_Id" />
+    </Key>
+    <Property Name="wallet_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Customer_Id" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="Date_of_Top_Up" Type="DateTime" Precision="0" />
+    <Property Name="Last_Top_Up" Type="Double" />
+    <Property Name="Total_Top_Up" Type="Double" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Wallet__Customer__5535A963" FromRole="Wallet" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="BucketList">
+    <Key>
+      <PropertyRef Name="Serial_Number" />
+    </Key>
+    <Property Name="Serial_Number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Product_Id" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="Customer_Id" Type="Decimal" Precision="10" Scale="0" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__BucketLis__Custo__6477ECF3" FromRole="BucketList" ToRole="Customer" />
+    <NavigationProperty Name="Product" Relationship="Self.FK__BucketLis__Produ__6383C8BA" FromRole="BucketList" ToRole="Products" />
+  </EntityType>
+  <Association Name="FK__Admin__Hint_Id__4D94879B">
+    <End Role="Hints" Type="Self.Hint" Multiplicity="0..1" />
+    <End Role="Admin" Type="Self.Admin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hints">
+        <PropertyRef Name="Hint_Id" />
+      </Principal>
+      <Dependent Role="Admin">
+        <PropertyRef Name="Hint_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BucketLis__Custo__6477ECF3">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="BucketList" Type="Self.BucketList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Customer_Id" />
+      </Principal>
+      <Dependent Role="BucketList">
+        <PropertyRef Name="Customer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customer__Hint_I__52593CB8">
+    <End Role="Hints" Type="Self.Hint" Multiplicity="0..1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hints">
+        <PropertyRef Name="Hint_Id" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="Hint_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__Customer__6E01572D">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Customer_Id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Customer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Wallet__Customer__5535A963">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Wallet" Type="Self.Wallet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Customer_Id" />
+      </Principal>
+      <Dependent Role="Wallet">
+        <PropertyRef Name="Customer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Vendors__Hint_Id__59063A47">
+    <End Role="Hints" Type="Self.Hint" Multiplicity="0..1" />
+    <End Role="Vendors" Type="Self.Vendor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hints">
+        <PropertyRef Name="Hint_Id" />
+      </Principal>
+      <Dependent Role="Vendors">
+        <PropertyRef Name="Hint_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Order_Can__Order__73BA3083">
+    <End Role="Order_Details" Type="Self.Order_Details" Multiplicity="0..1" />
+    <End Role="Order_Cancellation" Type="Self.Order_Cancellation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order_Details">
+        <PropertyRef Name="Order_Id" />
+      </Principal>
+      <Dependent Role="Order_Cancellation">
+        <PropertyRef Name="Order_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Order_Det__Produ__75A278F5">
+    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="Order_Details" Type="Self.Order_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Product_Id" />
+      </Principal>
+      <Dependent Role="Order_Details">
+        <PropertyRef Name="Product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Order_Det__Purch__70DDC3D8">
+    <End Role="Orders" Type="Self.Order" Multiplicity="0..1" />
+    <End Role="Order_Details" Type="Self.Order_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="Purchase_Id" />
+      </Principal>
+      <Dependent Role="Order_Details">
+        <PropertyRef Name="Purchase_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BucketLis__Produ__6383C8BA">
+    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="BucketList" Type="Self.BucketList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Product_Id" />
+      </Principal>
+      <Dependent Role="BucketList">
+        <PropertyRef Name="Product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Products__Vendor__619B8048">
+    <End Role="Vendors" Type="Self.Vendor" Multiplicity="0..1" />
+    <End Role="Products" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendors">
+        <PropertyRef Name="Vendor_Id" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="Vendor_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="E_TradingDBEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Admins" EntityType="Self.Admin" />
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="Hints" EntityType="Self.Hint" />
+    <EntitySet Name="Order_Cancellation" EntityType="Self.Order_Cancellation" />
+    <EntitySet Name="Order_Details" EntityType="Self.Order_Details" />
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="Vendors" EntityType="Self.Vendor" />
+    <EntitySet Name="Wallets" EntityType="Self.Wallet" />
+    <EntitySet Name="BucketLists" EntityType="Self.BucketList" />
+    <AssociationSet Name="FK__Admin__Hint_Id__4D94879B" Association="Self.FK__Admin__Hint_Id__4D94879B">
+      <End Role="Hints" EntitySet="Hints" />
+      <End Role="Admin" EntitySet="Admins" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BucketLis__Custo__6477ECF3" Association="Self.FK__BucketLis__Custo__6477ECF3">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="BucketList" EntitySet="BucketLists" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customer__Hint_I__52593CB8" Association="Self.FK__Customer__Hint_I__52593CB8">
+      <End Role="Hints" EntitySet="Hints" />
+      <End Role="Customer" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__Customer__6E01572D" Association="Self.FK__Orders__Customer__6E01572D">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Wallet__Customer__5535A963" Association="Self.FK__Wallet__Customer__5535A963">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Wallet" EntitySet="Wallets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Vendors__Hint_Id__59063A47" Association="Self.FK__Vendors__Hint_Id__59063A47">
+      <End Role="Hints" EntitySet="Hints" />
+      <End Role="Vendors" EntitySet="Vendors" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Order_Can__Order__73BA3083" Association="Self.FK__Order_Can__Order__73BA3083">
+      <End Role="Order_Details" EntitySet="Order_Details" />
+      <End Role="Order_Cancellation" EntitySet="Order_Cancellation" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Order_Det__Produ__75A278F5" Association="Self.FK__Order_Det__Produ__75A278F5">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Order_Details" EntitySet="Order_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Order_Det__Purch__70DDC3D8" Association="Self.FK__Order_Det__Purch__70DDC3D8">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Order_Details" EntitySet="Order_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BucketLis__Produ__6383C8BA" Association="Self.FK__BucketLis__Produ__6383C8BA">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="BucketList" EntitySet="BucketLists" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Products__Vendor__619B8048" Association="Self.FK__Products__Vendor__619B8048">
+      <End Role="Vendors" EntitySet="Vendors" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <FunctionImport Name="CancelOrder">
+      <Parameter Name="Order_Id" Mode="In" Type="Int32" />
+      <Parameter Name="Cancellation_Date" Mode="In" Type="DateTime" />
+      <Parameter Name="Refund_Amount" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="GetCustomerIdByEmail" ReturnType="Collection(Decimal)">
+      <Parameter Name="Email" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetProductsByVendorId" ReturnType="Collection(E_TradingDBModel.GetProductsByVendorId_Result)">
+      <Parameter Name="VendorId" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="InsertBucketListItem">
+      <Parameter Name="Product_Id" Mode="In" Type="Int32" />
+      <Parameter Name="Customer_Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="InsertIntoBucketList">
+      <Parameter Name="Product_Id" Mode="In" Type="Decimal" />
+      <Parameter Name="Customer_Id" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="PlaceOrder">
+      <Parameter Name="Customer_Id" Mode="In" Type="Decimal" />
+      <Parameter Name="Product_Id" Mode="In" Type="Decimal" />
+      <Parameter Name="Quantity" Mode="In" Type="Int32" />
+      <Parameter Name="Delivery_Date" Mode="In" Type="DateTime" />
+      <Parameter Name="Payment_Mode" Mode="In" Type="String" />
+      <Parameter Name="Address" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="GetProductsByVendorId_Result">
+    <Property Type="Decimal" Name="Product_Id" Nullable="false" Precision="10" Scale="0" />
+    <Property Type="String" Name="Product_Name" Nullable="true" MaxLength="40" />
+    <Property Type="String" Name="Brand" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="Color" Nullable="true" MaxLength="20" />
+    <Property Type="Double" Name="Price" Nullable="true" />
+    <Property Type="Int32" Name="Available_Stock" Nullable="true" />
+    <Property Type="String" Name="Status" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="ImageFileName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="isdeleted" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Vendor_Name" Nullable="false" MaxLength="20" />
+  </ComplexType>
+</Schema>

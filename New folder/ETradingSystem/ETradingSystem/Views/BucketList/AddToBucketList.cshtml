@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ETradingSystem.Models.BucketList>
+
+@{
+    ViewBag.Title = "Bucket List";
+}
+
+<h2>Bucket List</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+@if (Model.Any())
+{
+    <table class="table">
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Brand</th>
+            <th>Color</th>
+            <th>Price</th>
+            <th>Available Stock</th>
+            <th>Status</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Product_Id</td>
+                <td>@item.Product_Name</td>
+                <td>@item.Brand</td>
+                <td>@item.Color</td>
+                <td>@item.Price</td>
+                <td>@item.Available_Stock</td>
+                <td>@item.Status</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No items in the bucket list.</p>
+}
+
+@Html.ActionLink("Add Product to Bucket List", "Create", "BucketList", null, new { @class = "btn btn-primary" })

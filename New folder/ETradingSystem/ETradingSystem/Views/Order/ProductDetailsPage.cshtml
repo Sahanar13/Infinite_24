@@ -1,0 +1,12 @@
+﻿@model List<ETradingSystem.Models.Product>
+
+<!-- Display product details -->
+
+<form action="@Url.Action("PlaceOrder", "Orders")" method="post">
+    <input type="hidden" name="Product_Id" value="@Model.Product_Id" />
+    Quantity: <input type="number" name="Quantity" min="1" value="1" required /><br />
+    Delivery Date: <input type="date" name="Delivery_Date" required /><br />
+    Payment Mode: <input type="text" name="Payment_Mode" required /><br />
+    Address: <input type="text" name="Address" required /><br />
+    <input type="submit" value="Buy Now" />
+</form>

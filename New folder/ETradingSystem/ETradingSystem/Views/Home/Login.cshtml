@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Travel Booking System</title>
+    <style>
+        /* Body Section Styles */
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .welcome-message {
+            font-size: 24px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .description {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .feature-card {
+            width: 250px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer; /* Make the cards clickable */
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+            .feature-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .feature-description {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Button Styles */
+        .quick-links {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .action-button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 18px;
+            margin: 0 10px;
+        }
+
+            .action-button:hover {
+                background-color: #0056b3;
+            }
+
+        /* Footer Section Styles */
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer-links {
+            margin-top: 20px;
+        }
+
+            .footer-links a {
+                color: #fff;
+                text-decoration: none;
+                margin: 0 10px;
+            }
+
+                .footer-links a:hover {
+                    text-decoration: underline;
+                }
+    </style>
+</head>
+<body>
+
+    <!-- Body Section -->
+    <section class="welcome-section">
+        <div class="welcome-message">Welcome to the E-Trading System</div>
+        <div class="description">
+            An e-trading system is an online platform where people can buy and sell financial assets like stocks and bonds. 
+            It makes trading fast, easy, and accessible, allowing users to execute transactions electronically over the internet.
+        </div>
+        <div class="features">
+            <!-- Admin Feature -->
+            <a href="@Url.Action("Login", "AdminValidation")" class="feature-card">
+                <div class="feature-icon">👩‍💼‍🔧</div>
+                <div class="feature-title">Admin</div>
+                <div class="feature-description">Manage Customer, Vendor, and Product Categories.</div>
+            </a>
+            <!-- Customer Feature -->
+            <a href="@Url.Action("Login", "CustomerValidation")" class="feature-card">
+                <div class="feature-icon">👨‍💼</div>
+                <div class="feature-title">Customer</div>
+                <div class="feature-description">Buy products, Edit or Update Profile, Cancel Orders.</div>
+            </a>
+            <!-- Vendor Feature -->
+            <a href="@Url.Action("Login", "VendorValidation")" class="feature-card">
+                <div class="feature-icon">👩‍💼</div>
+                <div class="feature-title">Vendor</div>
+                <div class="feature-description">Add, Custom, Delete Products.</div>
+            </a>
+            
+        </div>
+    </section>
+
+</body>
+</html>
+

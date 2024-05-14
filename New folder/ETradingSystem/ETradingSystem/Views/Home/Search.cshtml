@@ -1,0 +1,46 @@
+﻿@model List<ETradingSystem.Models.Product>
+
+@{
+    ViewBag.Title = "Search Results";
+}
+
+<h2>Search Results</h2>
+
+@if (Model.Any())
+{
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Action</th>
+        </tr>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Product_Name</td>
+
+                <td>@product.Price</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(product.ImageFileName))
+                    {
+                        <img src="@Url.Content(product.ImageFileName)" alt="Product Image" style="width: 100px; height: 100px;" />
+                    }
+                    else
+                    {
+                        <span>No image available</span>
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("AddToBucketList", "Home", new { productId = product.Product_Id })" class="btn btn-primary">Add to Bucket List</a>
+                    <a href="@Url.Action("BuyNow", "Home", new { productId = product.Product_Id })" class="btn btn-success">Buy Now</a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No products found.</p>
+}
