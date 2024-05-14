@@ -1,0 +1,32 @@
+﻿@model Question_1.Models.Order
+@{
+    var customerList = ViewData["CustomerList"] as List<Question_1.Models.Customer>;
+}
+
+<h1>Create New Order</h1>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label for="CustomerId">Customer Name</label>
+        <select asp-for="CustomerId" class="form-control">
+            <option value="">Select Customer</option>
+            @if (customerList != null)
+            {
+                @foreach (var customer in customerList)
+                {
+                    <option value="@customer.CustomerId">@customer.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="OrderDate">Order Date</label>
+        <input asp-for="OrderDate" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="TotalAmount">Total Amount</label>
+        <input asp-for="TotalAmount" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

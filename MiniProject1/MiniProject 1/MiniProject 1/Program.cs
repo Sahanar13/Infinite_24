@@ -671,9 +671,9 @@ namespace MiniProject_TicketBooking
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred while generating total revenue: {ex.Message}");
+                // Optionally, you can log the exception details for further analysis
             }
         }
-
 
         static void DeactivatedTrain()
         {

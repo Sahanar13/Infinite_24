@@ -1,0 +1,15 @@
+﻿@model Question_1.Models.Order
+
+<h1>Delete Order</h1>
+
+<h4>Are you sure you want to delete this order?</h4>
+<div>
+    <h4>Order Date: @Model.OrderDate</h4>
+    <h4>Total Amount: @Model.TotalAmount</h4>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="OrderId" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

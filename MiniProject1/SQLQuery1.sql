@@ -964,3 +964,35 @@ BEGIN
         PRINT 'An error occurred: ' + ERROR_MESSAGE();
     END CATCH
 END;
+
+
+
+CREATE OR ALTER PROCEDURE GenerateTotalRevenue
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    DECLARE @TotalRevenue DECIMAL(10, 2);
+
+    BEGIN TRY
+        SELECT @TotalRevenue = SUM(TotalAmount)
+        FROM Booking;
+        
+        IF @TotalRevenue IS NOT NULL
+            SELECT @TotalRevenue AS TotalRevenue;
+        ELSE
+            SELECT 0 AS TotalRevenue; -- Assuming total revenue is zero when no bookings exist
+    END TRY
+    BEGIN CATCH
+        -- Handle any errors that occur during execution
+        SELECT ERROR_MESSAGE() AS ErrorMessage;
+    END CATCH
+END;
+
+
+
+
+SELECT * FROM Booking
+SELECT * FROM  Trains
+SELECT * FROM Users
+SELECT * FROM Cancellation
